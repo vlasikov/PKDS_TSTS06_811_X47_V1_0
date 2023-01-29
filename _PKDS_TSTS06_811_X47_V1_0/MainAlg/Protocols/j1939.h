@@ -50,8 +50,8 @@ typedef struct __CAN_Periph_ctrl_t
 	uint8_t redLight;
 	uint8_t passengerButtonLightIn;
 	uint8_t passengerButtonLightOut;
-	uint8_t disabledButtonLightIn;
-	uint8_t disabledButtonLightOut;
+	uint8_t disabledButtonLightIn;		//-- непонятно
+	uint8_t disabledButtonLightOut;		//-- непонятно
 	uint8_t stopIndicator;
 	uint8_t greenIndicator;
 	uint8_t redIndicator;

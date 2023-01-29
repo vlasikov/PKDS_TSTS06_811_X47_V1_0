@@ -42,6 +42,27 @@
 #define DSC1_PARKING_LIGHTS_ON_Msk (1UL<<12)
 #define DSC1_PARKING_LIGHTS_NON_Msk (1UL<<13)
 
+// CAN DSC2_MASKS
+	// 1 byte
+#define DSC2_RUBBER_LIGHTS_IN_Msk 		(31UL<<0)
+#define DSC2_RUBBER_LIGHTS_OUT_Msk 		(31UL<<4)
+	// 2 byte
+#define DSC2_HEAT_SCREEN_Msk 			(3UL<<0)
+#define DSC2_BUZZER_Msk 				(31UL<<2)
+#define DSC2_NEON_LIGHT_Msk 			(3UL<<6)
+	// 3 byte
+#define DSC2_STEP_LIGHT_Msk 			(3UL<<0)
+#define DSC2_RED_LIGHT_Msk 				(3UL<<2
+#define DSC2_PASSENGER_BUTTON_LIGHT_IN 	(3UL<<4)
+#define DSC2_PASSENGER_BUTTON_LIGHT_OUT (3UL<<6)
+	// 4 byte
+#define DSC2_INVALID_BUTTON_LIGHT_IN 	(3UL<<0)
+#define DSC2_INVALID_BUTTON_LIGHT_OUT 	(3UL<<2)
+#define DSC2_STOP_INDICATOR 			(3UL<<4)
+#define DSC2_GREEN_INDICATOR 			(3UL<<6)
+	// 5 byte
+#define DSC2_RED_INDICATOR 				(3UL<<0)
+
 // etc..............................
 
 
@@ -149,17 +170,37 @@ void DSC2IsrHandler (void)
 	XMC_CAN_MO_t* Msg;
 	Msg = CAN_EXT_LMO_02_Config.mo_ptr;
 
-	uint32_t data[2] = {0,0};
+	uint32_t data[5] = {0,0,0,0,0};
 
 	if(Msg->can_identifier == (DCS2_ID_BASE + ((Presets.DOOR_NUMBER - 1) * 0x0100)) )
 	{
 		data[0] = Msg->can_data[0];
 		data[1] = Msg->can_data[1];
+		data[2] = Msg->can_data[2];
+		data[3] = Msg->can_data[3];
+		data[4] = Msg->can_data[4];
+
+
+		CanPeriphControl.rubberLightsIn 			= (data[0] & DSC2_RUBBER_LIGHTS_IN_Msk) >> 0;
+		CanPeriphControl.rubberLightsOut 			= (data[0] & DSC2_RUBBER_LIGHTS_OUT_Msk) >> 4;
+
+		CanPeriphControl.heatScreen 				= (data[1] & DSC2_HEAT_SCREEN_Msk) >> 0;
+		CanPeriphControl.buzzer 					= (data[1] & DSC2_BUZZER_Msk) >> 2;
+		CanPeriphControl.neonLight 					= (data[1] & DSC2_NEON_LIGHT_Msk) >> 6;
+
+		CanPeriphControl.stepLight 					= (data[2] & DSC2_STEP_LIGHT_Msk) >> 0;
+		CanPeriphControl.redLight 					= (data[2] & DSC2_RED_LIGHT_Msk) >> 2;
+		CanPeriphControl.passengerButtonLightIn 	= (data[2] & DSC2_PASSENGER_BUTTON_LIGHT_IN) >> 4;
+		CanPeriphControl.passengerButtonLightOut 	= (data[2] & DSC2_PASSENGER_BUTTON_LIGHT_OUT) >> 6;
+
+		CanPeriphControl.disabledButtonLightIn		= (data[3] & DSC2_INVALID_BUTTON_LIGHT_IN) >> 0;
+		CanPeriphControl.disabledButtonLightOut 	= (data[3] & DSC2_INVALID_BUTTON_LIGHT_OUT) >> 2;
+		CanPeriphControl.stopIndicator 				= (data[3] & DSC2_STOP_INDICATOR) >> 4;
+		CanPeriphControl.greenIndicator				= (data[3] & DSC2_GREEN_INDICATOR) >> 6;
+
+		CanPeriphControl.redIndicator				= (data[4] & DSC2_RED_INDICATOR) >> 0;
 	}
-
-	// Parce to CanPeriphControl struct
 }
-
 
 void DSC3IsrHandler (void)
 {
@@ -183,11 +224,14 @@ void CCVSIsrHandler(void)
 	Msg = CAN_EXT_LMO_04_Config.mo_ptr;
 
 	uint32_t data[2] = {0,0};
+	int32_t  speed_wagon=0;
 
 	if(Msg->can_identifier == CCVS_ID)
 	{
 		data[0] = Msg->can_data[0];
 		data[1] = Msg->can_data[1];
+
+		speed_wagon = (data[1]<<8) + data[0];
 	}
 	// Parce to CanCmd.speedIsZero  throw compare with (uint16_t)Presets.VEHICLE_SPEED_THRESHOLD
 }
@@ -197,12 +241,23 @@ void TDIsrHandler (void)
 	XMC_CAN_MO_t* Msg;
 	Msg = CAN_EXT_LMO_05_Config.mo_ptr;
 
-	uint32_t data[2] = {0,0};
+	uint32_t data[6] = {0,0,0,0,0,0};
 
 	if(Msg->can_identifier == TD_ID)
 	{
 		data[0] = Msg->can_data[0];
 		data[1] = Msg->can_data[1];
+		data[2] = Msg->can_data[2];
+		data[3] = Msg->can_data[3];
+		data[4] = Msg->can_data[4];
+		data[5] = Msg->can_data[5];
+
+		CanTime.sec		= data[0];
+		CanTime.min		= data[1];
+		CanTime.hour	= data[2];
+		CanTime.day		= data[3];
+		CanTime.month	= data[4];
+		CanTime.year	= data[5];
 	}
 
 	//Parce to CanTime
