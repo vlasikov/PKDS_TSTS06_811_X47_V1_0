@@ -231,7 +231,7 @@ void CCVSIsrHandler(void)
 		data[0] = Msg->can_data[0];
 		data[1] = Msg->can_data[1];
 
-		speed_wagon = (data[1]<<8) + data[0];
+		speed_wagon = (data[1]<<8) & data[0];		// не факт
 	}
 	// Parce to CanCmd.speedIsZero  throw compare with (uint16_t)Presets.VEHICLE_SPEED_THRESHOLD
 }
