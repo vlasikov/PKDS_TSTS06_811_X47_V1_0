@@ -1,0 +1,270 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu fpv4-sp-d16
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,4
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "bldc_scalar_state_machine.c"
+  16              	 .section .text.Motor0_BLDC_SCALAR_MSM_NORMAL_OPERATION_Entry_Func,"ax",%progbits
+  17              	 .align 1
+  18              	 .thumb
+  19              	 .thumb_func
+  21              	Motor0_BLDC_SCALAR_MSM_NORMAL_OPERATION_Entry_Func:
+  22              	 
+  23              	 
+  24 0000 1C4A     	 ldr r2,.L12
+  25 0002 536F     	 ldr r3,[r2,#116]
+  26 0004 23F00103 	 bic r3,r3,#1
+  27 0008 10B5     	 push {r4,lr}
+  28 000a 5367     	 str r3,[r2,#116]
+  29 000c FFF7FEFF 	 bl Motor0_BLDC_SCALAR_SPEED_POS_HALL_GetHallPosition
+  30 0010 194B     	 ldr r3,.L12+4
+  31 0012 1A4C     	 ldr r4,.L12+8
+  32 0014 C0B2     	 uxtb r0,r0
+  33 0016 5874     	 strb r0,[r3,#17]
+  34 0018 FFF7FEFF 	 bl Motor0_BLDC_SCALAR_PatternInitiator
+  35 001c 184B     	 ldr r3,.L12+12
+  36 001e 1022     	 movs r2,#16
+  37 0020 C3F88821 	 str r2,[r3,#392]
+  38 0024 94F86430 	 ldrb r3,[r4,#100]
+  39 0028 022B     	 cmp r3,#2
+  40 002a 06D0     	 beq .L2
+  41 002c FFF7FEFF 	 bl Motor0_BLDC_SCALAR_SPEED_POS_HALL_Start
+  42 0030 4420     	 movs r0,#68
+  43 0032 3D21     	 movs r1,#61
+  44 0034 0022     	 movs r2,#0
+  45 0036 FFF7FEFF 	 bl BLDC_SCALAR_NVIC_NodeInit
+  46              	.L2:
+  47 003a 4520     	 movs r0,#69
+  48 003c 3D21     	 movs r1,#61
+  49 003e 0022     	 movs r2,#0
+  50 0040 FFF7FEFF 	 bl BLDC_SCALAR_NVIC_NodeInit
+  51 0044 3C20     	 movs r0,#60
+  52 0046 3E21     	 movs r1,#62
+  53 0048 0022     	 movs r2,#0
+  54 004a FFF7FEFF 	 bl BLDC_SCALAR_NVIC_NodeInit
+  55 004e 94F86430 	 ldrb r3,[r4,#100]
+  56 0052 012B     	 cmp r3,#1
+  57 0054 04D0     	 beq .L3
+  58 0056 094B     	 ldr r3,.L12+8
+  59 0058 93F86430 	 ldrb r3,[r3,#100]
+  60 005c 022B     	 cmp r3,#2
+  61 005e 04D1     	 bne .L4
+  62              	.L3:
+  63 0060 084A     	 ldr r2,.L12+16
+  64 0062 D36C     	 ldr r3,[r2,#76]
+  65 0064 43F48073 	 orr r3,r3,#256
+  66 0068 D364     	 str r3,[r2,#76]
+  67              	.L4:
+  68 006a 0723     	 movs r3,#7
+  69 006c 84F86430 	 strb r3,[r4,#100]
+  70 0070 10BD     	 pop {r4,pc}
+  71              	.L13:
+  72 0072 00BF     	 .align 2
+  73              	.L12:
+  74 0074 00800240 	 .word 1073905664
+  75 0078 00000000 	 .word Motor0_BLDC_SCALAR_Hall
+  76 007c 00000000 	 .word Motor0_BLDC_SCALAR
+  77 0080 00E100E0 	 .word -536813312
+  78 0084 00400050 	 .word 1342193664
+  80              	 .section .ram_code,"ax",%progbits
+  81              	 .align 1
+  82              	 .global Motor0_BLDC_SCALAR_MSM
+  83              	 .thumb
+  84              	 .thumb_func
+  86              	Motor0_BLDC_SCALAR_MSM:
+  87              	 
+  88              	 
+  89 0000 70B5     	 push {r4,r5,r6,lr}
+  90 0002 4B4C     	 ldr r4,.L36
+  91 0004 94F86430 	 ldrb r3,[r4,#100]
+  92 0008 082B     	 cmp r3,#8
+  93 000a 00F28A80 	 bhi .L15
+  94 000e DFE803F0 	 tbb [pc,r3]
+  95              	.L17:
+  96 0012 86       	 .byte (.L16-.L17)/2
+  97 0013 5A       	 .byte (.L18-.L17)/2
+  98 0014 29       	 .byte (.L19-.L17)/2
+  99 0015 88       	 .byte (.L15-.L17)/2
+ 100 0016 88       	 .byte (.L15-.L17)/2
+ 101 0017 88       	 .byte (.L15-.L17)/2
+ 102 0018 88       	 .byte (.L15-.L17)/2
+ 103 0019 05       	 .byte (.L20-.L17)/2
+ 104 001a 54       	 .byte (.L21-.L17)/2
+ 105 001b 00       	 .p2align 1
+ 106              	.L20:
+ 107 001c 454B     	 ldr r3,.L36+4
+ 108 001e 464A     	 ldr r2,.L36+8
+ 109 0020 1968     	 ldr r1,[r3]
+ 110 0022 5268     	 ldr r2,[r2,#4]
+ 111 0024 5A60     	 str r2,[r3,#4]
+ 112 0026 2160     	 str r1,[r4]
+ 113 0028 521A     	 subs r2,r2,r1
+ 114 002a A16F     	 ldr r1,[r4,#120]
+ 115 002c 5143     	 muls r1,r2,r1
+ 116 002e 4CBF     	 ite mi
+ 117 0030 1A69     	 ldrmi r2,[r3,#16]
+ 118 0032 DA68     	 ldrpl r2,[r3,#12]
+ 119 0034 9A60     	 str r2,[r3,#8]
+ 120 0036 FFF7FEFF 	 bl Motor0_BLDC_SCALAR_Ramp_Linear
+ 121 003a 404B     	 ldr r3,.L36+12
+ 122 003c 9B6A     	 ldr r3,[r3,#40]
+ 123 003e B3F5406F 	 cmp r3,#3072
+ 124 0042 6ED3     	 bcc .L15
+ 125 0044 3E4B     	 ldr r3,.L36+16
+ 126 0046 0022     	 movs r2,#0
+ 127 0048 596A     	 ldr r1,[r3,#36]
+ 128 004a 83F82920 	 strb r2,[r3,#41]
+ 129 004e DA61     	 str r2,[r3,#28]
+ 130 0050 1A60     	 str r2,[r3]
+ 131 0052 5A60     	 str r2,[r3,#4]
+ 132 0054 9A60     	 str r2,[r3,#8]
+ 133 0056 DA60     	 str r2,[r3,#12]
+ 134 0058 1A61     	 str r2,[r3,#16]
+ 135 005a 5A61     	 str r2,[r3,#20]
+ 136 005c 9961     	 str r1,[r3,#24]
+ 137 005e 1A62     	 str r2,[r3,#32]
+ 138 0060 E266     	 str r2,[r4,#108]
+ 139 0062 5EE0     	 b .L15
+ 140              	.L19:
+ 141 0064 FFF7FEFF 	 bl Motor0_BLDC_SCALAR_State_Identification
+ 142 0068 0128     	 cmp r0,#1
+ 143 006a 5AD1     	 bne .L15
+ 144 006c 354A     	 ldr r2,.L36+20
+ 145 006e 536F     	 ldr r3,[r2,#116]
+ 146 0070 23F00103 	 bic r3,r3,#1
+ 147 0074 5367     	 str r3,[r2,#116]
+ 148 0076 344B     	 ldr r3,.L36+24
+ 149 0078 A16F     	 ldr r1,[r4,#120]
+ 150 007a D868     	 ldr r0,[r3,#12]
+ 151 007c 2C4A     	 ldr r2,.L36
+ 152 007e 9B69     	 ldr r3,[r3,#24]
+ 153 0080 D26E     	 ldr r2,[r2,#108]
+ 154 0082 8842     	 cmp r0,r1
+ 155 0084 07D1     	 bne .L26
+ 156 0086 9A42     	 cmp r2,r3
+ 157 0088 02DC     	 bgt .L27
+ 158 008a 5B42     	 negs r3,r3
+ 159 008c 9A42     	 cmp r2,r3
+ 160 008e 07DA     	 bge .L28
+ 161              	.L27:
+ 162 0090 284B     	 ldr r3,.L36+4
+ 163 0092 1A60     	 str r2,[r3]
+ 164 0094 06E0     	 b .L35
+ 165              	.L26:
+ 166 0096 9A42     	 cmp r2,r3
+ 167 0098 07DC     	 bgt .L29
+ 168 009a 5B42     	 negs r3,r3
+ 169 009c 9A42     	 cmp r2,r3
+ 170 009e 04DB     	 blt .L29
+ 171              	.L28:
+ 172 00a0 FFF7FEFF 	 bl Motor0_BLDC_SCALAR_AmpBiasVoltCalibration
+ 173              	.L35:
+ 174 00a4 FFF7FEFF 	 bl Motor0_BLDC_SCALAR_MSM_NORMAL_OPERATION_Entry_Func
+ 175 00a8 3BE0     	 b .L15
+ 176              	.L29:
+ 177 00aa 0823     	 movs r3,#8
+ 178 00ac 84F86430 	 strb r3,[r4,#100]
+ 179 00b0 A36E     	 ldr r3,[r4,#104]
+ 180 00b2 43F08003 	 orr r3,r3,#128
+ 181 00b6 A366     	 str r3,[r4,#104]
+ 182 00b8 31E0     	 b .L16
+ 183              	.L21:
+ 184 00ba A36E     	 ldr r3,[r4,#104]
+ 185 00bc 8BBB     	 cbnz r3,.L15
+ 186 00be 1C4A     	 ldr r2,.L36
+ 187 00c0 82F86430 	 strb r3,[r2,#100]
+ 188 00c4 2DE0     	 b .L15
+ 189              	.L18:
+ 190 00c6 FFF7FEFF 	 bl Motor0_BLDC_SCALAR_MotorParamInit
+ 191 00ca FFF7FEFF 	 bl Motor0_BLDC_SCALAR_PWM_BC_InverterEnable
+ 192 00ce 3C21     	 movs r1,#60
+ 193 00d0 0022     	 movs r2,#0
+ 194 00d2 0E20     	 movs r0,#14
+ 195 00d4 FFF7FEFF 	 bl BLDC_SCALAR_NVIC_NodeInit
+ 196 00d8 1B4B     	 ldr r3,.L36+24
+ 197 00da A56F     	 ldr r5,[r4,#120]
+ 198 00dc DD60     	 str r5,[r3,#12]
+ 199 00de FFF7FEFF 	 bl Motor0_BLDC_SCALAR_SPEED_POS_HALL_GetHallPosition
+ 200 00e2 1A4B     	 ldr r3,.L36+28
+ 201 00e4 05F00805 	 and r5,r5,#8
+ 202 00e8 5874     	 strb r0,[r3,#17]
+ 203 00ea 1D44     	 add r5,r5,r3
+ 204 00ec C0B2     	 uxtb r0,r0
+ 205 00ee 154B     	 ldr r3,.L36+20
+ 206 00f0 2A5C     	 ldrb r2,[r5,r0]
+ 207 00f2 0226     	 movs r6,#2
+ 208 00f4 02F03F02 	 and r2,r2,#63
+ 209 00f8 5A63     	 str r2,[r3,#52]
+ 210 00fa 9E64     	 str r6,[r3,#72]
+ 211 00fc 1A6B     	 ldr r2,[r3,#48]
+ 212 00fe C2F3C202 	 ubfx r2,r2,#3,#3
+ 213 0102 AA5C     	 ldrb r2,[r5,r2]
+ 214 0104 02F03F02 	 and r2,r2,#63
+ 215 0108 5A63     	 str r2,[r3,#52]
+ 216 010a FFF7FEFF 	 bl Motor0_BLDC_SCALAR_SPEED_POS_HALL_Start
+ 217 010e 4420     	 movs r0,#68
+ 218 0110 3D21     	 movs r1,#61
+ 219 0112 0022     	 movs r2,#0
+ 220 0114 FFF7FEFF 	 bl BLDC_SCALAR_NVIC_NodeInit
+ 221 0118 84F86460 	 strb r6,[r4,#100]
+ 222 011c 01E0     	 b .L15
+ 223              	.L16:
+ 224 011e FFF7FEFF 	 bl Motor0_BLDC_SCALAR_MotorStop
+ 225              	.L15:
+ 226 0122 A36E     	 ldr r3,[r4,#104]
+ 227 0124 1BB1     	 cbz r3,.L14
+ 228 0126 024B     	 ldr r3,.L36
+ 229 0128 0822     	 movs r2,#8
+ 230 012a 83F86420 	 strb r2,[r3,#100]
+ 231              	.L14:
+ 232 012e 70BD     	 pop {r4,r5,r6,pc}
+ 233              	.L37:
+ 234              	 .align 2
+ 235              	.L36:
+ 236 0130 00000000 	 .word Motor0_BLDC_SCALAR
+ 237 0134 00000000 	 .word Motor0_BLDC_SCALAR_Ramp
+ 238 0138 00000000 	 .word Motor0_BLDC_SCALAR_SpeedControl
+ 239 013c 00C20040 	 .word 1073791488
+ 240 0140 00000000 	 .word Motor0_BLDC_SCALAR_SPEED_POS_HALL
+ 241 0144 00800240 	 .word 1073905664
+ 242 0148 00000000 	 .word Motor0_BLDC_SCALAR_HALL_CatchFree
+ 243 014c 00000000 	 .word Motor0_BLDC_SCALAR_Hall
+ 245              	 .ident "GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20141119 (release) [ARM/embedded-4_9-branch revision 218278]"
+DEFINED SYMBOLS
+                            *ABS*:00000000 bldc_scalar_state_machine.c
+    {standard input}:17     .text.Motor0_BLDC_SCALAR_MSM_NORMAL_OPERATION_Entry_Func:00000000 $t
+    {standard input}:21     .text.Motor0_BLDC_SCALAR_MSM_NORMAL_OPERATION_Entry_Func:00000000 Motor0_BLDC_SCALAR_MSM_NORMAL_OPERATION_Entry_Func
+    {standard input}:74     .text.Motor0_BLDC_SCALAR_MSM_NORMAL_OPERATION_Entry_Func:00000074 $d
+    {standard input}:81     .ram_code:00000000 $t
+    {standard input}:86     .ram_code:00000000 Motor0_BLDC_SCALAR_MSM
+    {standard input}:96     .ram_code:00000012 $d
+    {standard input}:236    .ram_code:00000130 $d
+    {standard input}:105    .ram_code:0000001b $d
+    {standard input}:105    .ram_code:0000001c $t
+
+UNDEFINED SYMBOLS
+Motor0_BLDC_SCALAR_SPEED_POS_HALL_GetHallPosition
+Motor0_BLDC_SCALAR_PatternInitiator
+Motor0_BLDC_SCALAR_SPEED_POS_HALL_Start
+BLDC_SCALAR_NVIC_NodeInit
+Motor0_BLDC_SCALAR_Hall
+Motor0_BLDC_SCALAR
+Motor0_BLDC_SCALAR_Ramp_Linear
+Motor0_BLDC_SCALAR_State_Identification
+Motor0_BLDC_SCALAR_AmpBiasVoltCalibration
+Motor0_BLDC_SCALAR_MotorParamInit
+Motor0_BLDC_SCALAR_PWM_BC_InverterEnable
+Motor0_BLDC_SCALAR_MotorStop
+Motor0_BLDC_SCALAR_Ramp
+Motor0_BLDC_SCALAR_SpeedControl
+Motor0_BLDC_SCALAR_SPEED_POS_HALL
+Motor0_BLDC_SCALAR_HALL_CatchFree

@@ -1,0 +1,424 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu fpv4-sp-d16
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,4
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "system_XMC4700.c"
+  16              	 .section .text.delay,"ax",%progbits
+  17              	 .align 1
+  18              	 .thumb
+  19              	 .thumb_func
+  21              	delay:
+  22              	 
+  23              	 
+  24              	 
+  25 0000 82B0     	 sub sp,sp,#8
+  26 0002 0023     	 movs r3,#0
+  27              	.L4:
+  28 0004 0193     	 str r3,[sp,#4]
+  29 0006 019B     	 ldr r3,[sp,#4]
+  30 0008 8342     	 cmp r3,r0
+  31 000a 03D2     	 bcs .L6
+  32              	
+  33 000c 00BF     	 nop
+  34              	
+  35              	 .thumb
+  36 000e 019B     	 ldr r3,[sp,#4]
+  37 0010 0133     	 adds r3,r3,#1
+  38 0012 F7E7     	 b .L4
+  39              	.L6:
+  40 0014 02B0     	 add sp,sp,#8
+  41              	 
+  42 0016 7047     	 bx lr
+  44              	 .section .text.SystemCoreSetup,"ax",%progbits
+  45              	 .align 1
+  46              	 .weak SystemCoreSetup
+  47              	 .thumb
+  48              	 .thumb_func
+  50              	SystemCoreSetup:
+  51              	 
+  52              	 
+  53              	 
+  54              	
+  55 0000 72B6     	 cpsid i
+  56              	
+  57              	 .thumb
+  58 0002 0D4B     	 ldr r3,.L8
+  59 0004 0D4A     	 ldr r2,.L8+4
+  60 0006 9A60     	 str r2,[r3,#8]
+  61              	
+  62 0008 BFF34F8F 	 dsb 0xF
+  63              	
+  64              	
+  65 000c 62B6     	 cpsie i
+  66              	
+  67              	 .thumb
+  68 000e D3F88820 	 ldr r2,[r3,#136]
+  69 0012 0B49     	 ldr r1,.L8+8
+  70 0014 42F47002 	 orr r2,r2,#15728640
+  71 0018 C3F88820 	 str r2,[r3,#136]
+  72 001c 5A69     	 ldr r2,[r3,#20]
+  73 001e 22F00802 	 bic r2,r2,#8
+  74 0022 5A61     	 str r2,[r3,#20]
+  75 0024 41F21402 	 movw r2,#4116
+  76 0028 8B58     	 ldr r3,[r1,r2]
+  77 002a 23F00F03 	 bic r3,r3,#15
+  78 002e 43F00403 	 orr r3,r3,#4
+  79 0032 8B50     	 str r3,[r1,r2]
+  80 0034 7047     	 bx lr
+  81              	.L9:
+  82 0036 00BF     	 .align 2
+  83              	.L8:
+  84 0038 00ED00E0 	 .word -536810240
+  85 003c 00000000 	 .word __Vectors
+  86 0040 00100058 	 .word 1476399104
+  88              	 .section .text.OSCHP_GetFrequency,"ax",%progbits
+  89              	 .align 1
+  90              	 .weak OSCHP_GetFrequency
+  91              	 .thumb
+  92              	 .thumb_func
+  94              	OSCHP_GetFrequency:
+  95              	 
+  96              	 
+  97              	 
+  98 0000 0048     	 ldr r0,.L11
+  99 0002 7047     	 bx lr
+ 100              	.L12:
+ 101              	 .align 2
+ 102              	.L11:
+ 103 0004 001BB700 	 .word 12000000
+ 105              	 .section .text.SystemCoreClockUpdate,"ax",%progbits
+ 106              	 .align 1
+ 107              	 .weak SystemCoreClockUpdate
+ 108              	 .thumb
+ 109              	 .thumb_func
+ 111              	SystemCoreClockUpdate:
+ 112              	 
+ 113              	 
+ 114 0000 1D4B     	 ldr r3,.L19
+ 115 0002 DB68     	 ldr r3,[r3,#12]
+ 116 0004 D903     	 lsls r1,r3,#15
+ 117 0006 10B5     	 push {r4,lr}
+ 118 0008 25D5     	 bpl .L17
+ 119 000a 1C4B     	 ldr r3,.L19+4
+ 120 000c DA68     	 ldr r2,[r3,#12]
+ 121 000e 12F0010F 	 tst r2,#1
+ 122 0012 1C46     	 mov r4,r3
+ 123 0014 02D1     	 bne .L18
+ 124 0016 FFF7FEFF 	 bl OSCHP_GetFrequency
+ 125 001a 00E0     	 b .L15
+ 126              	.L18:
+ 127 001c 1848     	 ldr r0,.L19+8
+ 128              	.L15:
+ 129 001e 2268     	 ldr r2,[r4]
+ 130 0020 164B     	 ldr r3,.L19+4
+ 131 0022 5207     	 lsls r2,r2,#29
+ 132 0024 10D5     	 bpl .L16
+ 133 0026 9A68     	 ldr r2,[r3,#8]
+ 134 0028 9968     	 ldr r1,[r3,#8]
+ 135 002a 9B68     	 ldr r3,[r3,#8]
+ 136 002c C2F30362 	 ubfx r2,r2,#24,#4
+ 137 0030 C3F30644 	 ubfx r4,r3,#16,#7
+ 138 0034 531C     	 adds r3,r2,#1
+ 139 0036 04FB0333 	 mla r3,r4,r3,r3
+ 140 003a B0FBF3F0 	 udiv r0,r0,r3
+ 141 003e C1F30623 	 ubfx r3,r1,#8,#7
+ 142 0042 03FB0000 	 mla r0,r3,r0,r0
+ 143 0046 07E0     	 b .L14
+ 144              	.L16:
+ 145 0048 9B68     	 ldr r3,[r3,#8]
+ 146 004a 03F07F03 	 and r3,r3,#127
+ 147 004e 0133     	 adds r3,r3,#1
+ 148 0050 B0FBF3F0 	 udiv r0,r0,r3
+ 149 0054 00E0     	 b .L14
+ 150              	.L17:
+ 151 0056 0A48     	 ldr r0,.L19+8
+ 152              	.L14:
+ 153 0058 074A     	 ldr r2,.L19
+ 154 005a D368     	 ldr r3,[r2,#12]
+ 155 005c DBB2     	 uxtb r3,r3
+ 156 005e 0133     	 adds r3,r3,#1
+ 157 0060 B0FBF3F0 	 udiv r0,r0,r3
+ 158 0064 1369     	 ldr r3,[r2,#16]
+ 159 0066 03F00103 	 and r3,r3,#1
+ 160 006a 0133     	 adds r3,r3,#1
+ 161 006c B0FBF3F0 	 udiv r0,r0,r3
+ 162 0070 044B     	 ldr r3,.L19+12
+ 163 0072 1860     	 str r0,[r3]
+ 164 0074 10BD     	 pop {r4,pc}
+ 165              	.L20:
+ 166 0076 00BF     	 .align 2
+ 167              	.L19:
+ 168 0078 00460050 	 .word 1342195200
+ 169 007c 10470050 	 .word 1342195472
+ 170 0080 00366E01 	 .word 24000000
+ 171 0084 00000000 	 .word .LANCHOR0
+ 173              	 .section .text.SystemCoreClockSetup,"ax",%progbits
+ 174              	 .align 1
+ 175              	 .weak SystemCoreClockSetup
+ 176              	 .thumb
+ 177              	 .thumb_func
+ 179              	SystemCoreClockSetup:
+ 180              	 
+ 181              	 
+ 182 0000 38B5     	 push {r3,r4,r5,lr}
+ 183 0002 5F4B     	 ldr r3,.L56
+ 184 0004 1A68     	 ldr r2,[r3]
+ 185 0006 D407     	 lsls r4,r2,#31
+ 186 0008 0CD5     	 bpl .L22
+ 187              	.L26:
+ 188 000a 5E4B     	 ldr r3,.L56+4
+ 189 000c 1A68     	 ldr r2,[r3]
+ 190 000e 9005     	 lsls r0,r2,#22
+ 191 0010 10D5     	 bpl .L24
+ 192 0012 9A68     	 ldr r2,[r3,#8]
+ 193 0014 42F40072 	 orr r2,r2,#512
+ 194 0018 9A60     	 str r2,[r3,#8]
+ 195 001a 41F64C50 	 movw r0,#7500
+ 196 001e FFF7FEFF 	 bl delay
+ 197 0022 07E0     	 b .L24
+ 198              	.L22:
+ 199 0024 5A68     	 ldr r2,[r3,#4]
+ 200 0026 42F00102 	 orr r2,r2,#1
+ 201 002a 5A60     	 str r2,[r3,#4]
+ 202              	.L25:
+ 203 002c 1A68     	 ldr r2,[r3]
+ 204 002e D107     	 lsls r1,r2,#31
+ 205 0030 FCD5     	 bpl .L25
+ 206 0032 EAE7     	 b .L26
+ 207              	.L24:
+ 208 0034 544C     	 ldr r4,.L56+8
+ 209 0036 554D     	 ldr r5,.L56+12
+ 210 0038 6368     	 ldr r3,[r4,#4]
+ 211 003a 43F40023 	 orr r3,r3,#524288
+ 212 003e 6360     	 str r3,[r4,#4]
+ 213 0040 40F6C410 	 movw r0,#2500
+ 214 0044 FFF7FEFF 	 bl delay
+ 215 0048 6368     	 ldr r3,[r4,#4]
+ 216 004a 23F48033 	 bic r3,r3,#65536
+ 217 004e 23F00203 	 bic r3,r3,#2
+ 218 0052 6360     	 str r3,[r4,#4]
+ 219 0054 6B68     	 ldr r3,[r5,#4]
+ 220 0056 13F0300F 	 tst r3,#48
+ 221 005a 04D1     	 bne .L27
+ 222              	.L30:
+ 223 005c 6368     	 ldr r3,[r4,#4]
+ 224 005e 43F00103 	 orr r3,r3,#1
+ 225 0062 6360     	 str r3,[r4,#4]
+ 226 0064 1CE0     	 b .L28
+ 227              	.L27:
+ 228 0066 6B68     	 ldr r3,[r5,#4]
+ 229 0068 23F47023 	 bic r3,r3,#983040
+ 230 006c 23F03003 	 bic r3,r3,#48
+ 231 0070 6B60     	 str r3,[r5,#4]
+ 232 0072 FFF7FEFF 	 bl OSCHP_GetFrequency
+ 233 0076 6A68     	 ldr r2,[r5,#4]
+ 234 0078 454B     	 ldr r3,.L56+16
+ 235 007a B0FBF3F0 	 udiv r0,r0,r3
+ 236 007e 0138     	 subs r0,r0,#1
+ 237 0080 0023     	 movs r3,#0
+ 238 0082 42EA0040 	 orr r0,r2,r0,lsl#16
+ 239 0086 6860     	 str r0,[r5,#4]
+ 240 0088 E360     	 str r3,[r4,#12]
+ 241 008a 6368     	 ldr r3,[r4,#4]
+ 242 008c 23F40033 	 bic r3,r3,#131072
+ 243 0090 6360     	 str r3,[r4,#4]
+ 244              	.L29:
+ 245 0092 2368     	 ldr r3,[r4]
+ 246 0094 03F46073 	 and r3,r3,#896
+ 247 0098 B3F5607F 	 cmp r3,#896
+ 248 009c F9D1     	 bne .L29
+ 249 009e DDE7     	 b .L30
+ 250              	.L28:
+ 251 00a0 2268     	 ldr r2,[r4]
+ 252 00a2 394B     	 ldr r3,.L56+8
+ 253 00a4 D207     	 lsls r2,r2,#31
+ 254 00a6 FBD5     	 bpl .L28
+ 255 00a8 5A68     	 ldr r2,[r3,#4]
+ 256 00aa 42F01002 	 orr r2,r2,#16
+ 257 00ae 5A60     	 str r2,[r3,#4]
+ 258 00b0 384A     	 ldr r2,.L56+20
+ 259 00b2 9A60     	 str r2,[r3,#8]
+ 260 00b4 5A68     	 ldr r2,[r3,#4]
+ 261 00b6 42F04002 	 orr r2,r2,#64
+ 262 00ba 5A60     	 str r2,[r3,#4]
+ 263 00bc 5A68     	 ldr r2,[r3,#4]
+ 264 00be 22F01002 	 bic r2,r2,#16
+ 265 00c2 5A60     	 str r2,[r3,#4]
+ 266 00c4 5A68     	 ldr r2,[r3,#4]
+ 267 00c6 42F48022 	 orr r2,r2,#262144
+ 268 00ca 5A60     	 str r2,[r3,#4]
+ 269              	.L31:
+ 270 00cc 2368     	 ldr r3,[r4]
+ 271 00ce 2E4A     	 ldr r2,.L56+8
+ 272 00d0 5B07     	 lsls r3,r3,#29
+ 273 00d2 FBD5     	 bpl .L31
+ 274 00d4 5368     	 ldr r3,[r2,#4]
+ 275 00d6 23F00103 	 bic r3,r3,#1
+ 276 00da 5360     	 str r3,[r2,#4]
+ 277              	.L32:
+ 278 00dc 2268     	 ldr r2,[r4]
+ 279 00de 2A49     	 ldr r1,.L56+8
+ 280 00e0 12F00102 	 ands r2,r2,#1
+ 281 00e4 FAD1     	 bne .L32
+ 282 00e6 2C4B     	 ldr r3,.L56+24
+ 283 00e8 4FF00110 	 mov r0,#65537
+ 284 00ec D860     	 str r0,[r3,#12]
+ 285 00ee 5A61     	 str r2,[r3,#20]
+ 286 00f0 1A61     	 str r2,[r3,#16]
+ 287 00f2 1A62     	 str r2,[r3,#32]
+ 288 00f4 5A62     	 str r2,[r3,#36]
+ 289 00f6 0322     	 movs r2,#3
+ 290 00f8 DA61     	 str r2,[r3,#28]
+ 291 00fa 284A     	 ldr r2,.L56+28
+ 292 00fc 9A61     	 str r2,[r3,#24]
+ 293 00fe 284A     	 ldr r2,.L56+32
+ 294 0100 9A62     	 str r2,[r3,#40]
+ 295 0102 4B68     	 ldr r3,[r1,#4]
+ 296 0104 23F04003 	 bic r3,r3,#64
+ 297 0108 4B60     	 str r3,[r1,#4]
+ 298 010a 264B     	 ldr r3,.L56+36
+ 299 010c 8B60     	 str r3,[r1,#8]
+ 300              	.L33:
+ 301 010e 2368     	 ldr r3,[r4]
+ 302 0110 9D06     	 lsls r5,r3,#26
+ 303 0112 FCD5     	 bpl .L33
+ 304 0114 4FF41660 	 mov r0,#2400
+ 305 0118 FFF7FEFF 	 bl delay
+ 306 011c 1A4B     	 ldr r3,.L56+8
+ 307 011e 224A     	 ldr r2,.L56+40
+ 308 0120 9A60     	 str r2,[r3,#8]
+ 309              	.L34:
+ 310 0122 2368     	 ldr r3,[r4]
+ 311 0124 9806     	 lsls r0,r3,#26
+ 312 0126 FCD5     	 bpl .L34
+ 313 0128 4FF46160 	 mov r0,#3600
+ 314 012c FFF7FEFF 	 bl delay
+ 315 0130 154B     	 ldr r3,.L56+8
+ 316 0132 1E4A     	 ldr r2,.L56+44
+ 317 0134 9A60     	 str r2,[r3,#8]
+ 318              	.L35:
+ 319 0136 2368     	 ldr r3,[r4]
+ 320 0138 9906     	 lsls r1,r3,#26
+ 321 013a FCD5     	 bpl .L35
+ 322 013c 4FF49650 	 mov r0,#4800
+ 323 0140 FFF7FEFF 	 bl delay
+ 324 0144 104B     	 ldr r3,.L56+8
+ 325 0146 1A4A     	 ldr r2,.L56+48
+ 326 0148 9A60     	 str r2,[r3,#8]
+ 327              	.L36:
+ 328 014a 2368     	 ldr r3,[r4]
+ 329 014c 9A06     	 lsls r2,r3,#26
+ 330 014e FCD5     	 bpl .L36
+ 331 0150 41F27070 	 movw r0,#6000
+ 332 0154 FFF7FEFF 	 bl delay
+ 333 0158 0B4B     	 ldr r3,.L56+8
+ 334 015a 164A     	 ldr r2,.L56+52
+ 335 015c 9A60     	 str r2,[r3,#8]
+ 336              	.L37:
+ 337 015e 2368     	 ldr r3,[r4]
+ 338 0160 9B06     	 lsls r3,r3,#26
+ 339 0162 FCD5     	 bpl .L37
+ 340 0164 4FF4E150 	 mov r0,#7200
+ 341 0168 FFF7FEFF 	 bl delay
+ 342 016c 124B     	 ldr r3,.L56+56
+ 343 016e 0522     	 movs r2,#5
+ 344 0170 DA60     	 str r2,[r3,#12]
+ 345 0172 0022     	 movs r2,#0
+ 346 0174 C3F8A424 	 str r2,[r3,#1188]
+ 347 0178 FFF7FEFF 	 bl SystemCoreClockUpdate
+ 348 017c 38BD     	 pop {r3,r4,r5,pc}
+ 349              	.L57:
+ 350 017e 00BF     	 .align 2
+ 351              	.L56:
+ 352 0180 00420050 	 .word 1342194176
+ 353 0184 00440050 	 .word 1342194688
+ 354 0188 10470050 	 .word 1342195472
+ 355 018c 00470050 	 .word 1342195456
+ 356 0190 A0252600 	 .word 2500000
+ 357 0194 002F0B01 	 .word 17510144
+ 358 0198 00460050 	 .word 1342195200
+ 359 019c 05000100 	 .word 65541
+ 360 01a0 03002001 	 .word 18874371
+ 361 01a4 002F0501 	 .word 17116928
+ 362 01a8 002F0301 	 .word 16985856
+ 363 01ac 002F0201 	 .word 16920320
+ 364 01b0 002F0101 	 .word 16854784
+ 365 01b4 002F0001 	 .word 16789248
+ 366 01b8 60410050 	 .word 1342194016
+ 368              	 .section .text.SystemInit,"ax",%progbits
+ 369              	 .align 1
+ 370              	 .weak SystemInit
+ 371              	 .thumb
+ 372              	 .thumb_func
+ 374              	SystemInit:
+ 375              	 
+ 376              	 
+ 377 0000 38B5     	 push {r3,r4,r5,lr}
+ 378 0002 094A     	 ldr r2,.L61
+ 379 0004 094D     	 ldr r5,.L61+4
+ 380 0006 4FF00054 	 mov r4,#536870912
+ 381              	.L59:
+ 382 000a 2346     	 mov r3,r4
+ 383 000c 03CB     	 ldmia r3!,{r0,r1}
+ 384 000e AB42     	 cmp r3,r5
+ 385 0010 1060     	 str r0,[r2]
+ 386 0012 5160     	 str r1,[r2,#4]
+ 387 0014 1C46     	 mov r4,r3
+ 388 0016 02F10802 	 add r2,r2,#8
+ 389 001a F6D1     	 bne .L59
+ 390 001c FFF7FEFF 	 bl SystemCoreSetup
+ 391 0020 FFF7FEFF 	 bl SystemCoreClockSetup
+ 392 0024 38BD     	 pop {r3,r4,r5,pc}
+ 393              	.L62:
+ 394 0026 00BF     	 .align 2
+ 395              	.L61:
+ 396 0028 04000000 	 .word .LANCHOR0+4
+ 397 002c 10000020 	 .word 536870928
+ 399              	 .global g_chipid
+ 400              	 .global SystemCoreClock
+ 401              	 .section .no_init,"aw",%progbits
+ 402              	 .align 2
+ 403              	 .set .LANCHOR0,.+0
+ 406              	SystemCoreClock:
+ 407 0000 00000000 	 .space 4
+ 410              	g_chipid:
+ 411 0004 00000000 	 .space 16
+ 411      00000000 
+ 411      00000000 
+ 411      00000000 
+ 412              	 .ident "GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20141119 (release) [ARM/embedded-4_9-branch revision 218278]"
+DEFINED SYMBOLS
+                            *ABS*:00000000 system_XMC4700.c
+    {standard input}:17     .text.delay:00000000 $t
+    {standard input}:21     .text.delay:00000000 delay
+    {standard input}:45     .text.SystemCoreSetup:00000000 $t
+    {standard input}:50     .text.SystemCoreSetup:00000000 SystemCoreSetup
+    {standard input}:84     .text.SystemCoreSetup:00000038 $d
+    {standard input}:89     .text.OSCHP_GetFrequency:00000000 $t
+    {standard input}:94     .text.OSCHP_GetFrequency:00000000 OSCHP_GetFrequency
+    {standard input}:103    .text.OSCHP_GetFrequency:00000004 $d
+    {standard input}:106    .text.SystemCoreClockUpdate:00000000 $t
+    {standard input}:111    .text.SystemCoreClockUpdate:00000000 SystemCoreClockUpdate
+    {standard input}:168    .text.SystemCoreClockUpdate:00000078 $d
+    {standard input}:174    .text.SystemCoreClockSetup:00000000 $t
+    {standard input}:179    .text.SystemCoreClockSetup:00000000 SystemCoreClockSetup
+    {standard input}:352    .text.SystemCoreClockSetup:00000180 $d
+    {standard input}:369    .text.SystemInit:00000000 $t
+    {standard input}:374    .text.SystemInit:00000000 SystemInit
+    {standard input}:396    .text.SystemInit:00000028 $d
+    {standard input}:410    .no_init:00000004 g_chipid
+    {standard input}:406    .no_init:00000000 SystemCoreClock
+    {standard input}:402    .no_init:00000000 $d
+
+UNDEFINED SYMBOLS
+__Vectors

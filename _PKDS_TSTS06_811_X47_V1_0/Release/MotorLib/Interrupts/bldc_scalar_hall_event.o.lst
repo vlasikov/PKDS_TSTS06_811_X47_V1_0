@@ -1,0 +1,246 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu fpv4-sp-d16
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,4
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "bldc_scalar_hall_event.c"
+  16              	 .section .ram_code,"ax",%progbits
+  17              	 .align 1
+  18              	 .global POSIF0_0_IRQHandler
+  19              	 .thumb
+  20              	 .thumb_func
+  22              	POSIF0_0_IRQHandler:
+  23              	 
+  24              	 
+  25 0000 2DE9F74F 	 push {r0,r1,r2,r4,r5,r6,r7,r8,r9,r10,fp,lr}
+  26 0004 754C     	 ldr r4,.L20
+  27 0006 764D     	 ldr r5,.L20+4
+  28 0008 206F     	 ldr r0,[r4,#112]
+  29 000a C0F34000 	 ubfx r0,r0,#1,#1
+  30 000e 0028     	 cmp r0,#0
+  31 0010 00F09E80 	 beq .L2
+  32 0014 734A     	 ldr r2,.L20+8
+  33 0016 744F     	 ldr r7,.L20+12
+  34 0018 916F     	 ldr r1,[r2,#120]
+  35 001a 87F82000 	 strb r0,[r7,#32]
+  36 001e D4F80001 	 ldr r0,[r4,#256]
+  37 0022 6C7C     	 ldrb r4,[r5,#17]
+  38 0024 4E42     	 negs r6,r1
+  39 0026 2F19     	 adds r7,r5,r4
+  40 0028 06F00803 	 and r3,r6,#8
+  41 002c 01F00801 	 and r1,r1,#8
+  42 0030 DBB2     	 uxtb r3,r3
+  43 0032 795C     	 ldrb r1,[r7,r1]
+  44 0034 EF18     	 adds r7,r5,r3
+  45 0036 C0F34210 	 ubfx r0,r0,#5,#3
+  46 003a 3C5D     	 ldrb r4,[r7,r4]
+  47 003c B0EBD40F 	 cmp r0,r4,lsr#3
+  48 0040 1446     	 mov r4,r2
+  49 0042 02D0     	 beq .L3
+  50 0044 B0EBD10F 	 cmp r0,r1,lsr#3
+  51 0048 76D1     	 bne .L4
+  52              	.L3:
+  53 004a 684A     	 ldr r2,.L20+16
+  54 004c 1178     	 ldrb r1,[r2]
+  55 004e B9B9     	 cbnz r1,.L5
+  56 0050 94F86410 	 ldrb r1,[r4,#100]
+  57 0054 C9B2     	 uxtb r1,r1
+  58 0056 0229     	 cmp r1,#2
+  59 0058 12D1     	 bne .L5
+  60 005a 2844     	 add r0,r0,r5
+  61 005c 0124     	 movs r4,#1
+  62 005e C05C     	 ldrb r0,[r0,r3]
+  63 0060 D660     	 str r6,[r2,#12]
+  64 0062 1474     	 strb r4,[r2,#16]
+  65 0064 5D4A     	 ldr r2,.L20
+  66 0066 00F03F00 	 and r0,r0,#63
+  67 006a 5063     	 str r0,[r2,#52]
+  68 006c 9164     	 str r1,[r2,#72]
+  69 006e 116B     	 ldr r1,[r2,#48]
+  70 0070 2B44     	 add r3,r3,r5
+  71 0072 C1F3C201 	 ubfx r1,r1,#3,#3
+  72 0076 5B5C     	 ldrb r3,[r3,r1]
+  73 0078 03F03F03 	 and r3,r3,#63
+  74 007c 5363     	 str r3,[r2,#52]
+  75 007e 54E0     	 b .L6
+  76              	.L5:
+  77 0080 DFF87491 	 ldr r9,.L20+28
+  78 0084 DFF874B1 	 ldr fp,.L20+32
+  79 0088 E667     	 str r6,[r4,#124]
+  80 008a 0027     	 movs r7,#0
+  81 008c FFF7FEFF 	 bl Motor0_BLDC_SCALAR_PatternInitiator
+  82 0090 0126     	 movs r6,#1
+  83 0092 D9F870A0 	 ldr r10,[r9,#112]
+  84 0096 D9F82880 	 ldr r8,[r9,#40]
+  85 009a C9F81060 	 str r6,[r9,#16]
+  86 009e 4FF48073 	 mov r3,#256
+  87 00a2 CBF80830 	 str r3,[fp,#8]
+  88 00a6 4846     	 mov r0,r9
+  89 00a8 0193     	 str r3,[sp,#4]
+  90 00aa 0521     	 movs r1,#5
+  91 00ac C9F87070 	 str r7,[r9,#112]
+  92 00b0 FFF7FEFF 	 bl XMC_CCU4_SLICE_SetPrescaler
+  93 00b4 019B     	 ldr r3,[sp,#4]
+  94 00b6 CBF80C30 	 str r3,[fp,#12]
+  95 00ba C8F30321 	 ubfx r1,r8,#8,#4
+  96 00be 0539     	 subs r1,r1,#5
+  97 00c0 4B4B     	 ldr r3,.L20+20
+  98 00c2 C9F80C60 	 str r6,[r9,#12]
+  99 00c6 1FFA8AFA 	 uxth r10,r10
+ 100 00ca 0AFA01FA 	 lsl r10,r10,r1
+ 101 00ce 53F82110 	 ldr r1,[r3,r1,lsl#2]
+ 102 00d2 0AEB0102 	 add r2,r10,r1
+ 103 00d6 4749     	 ldr r1,.L20+24
+ 104 00d8 91F829E0 	 ldrb lr,[r1,#41]
+ 105 00dc 0B6A     	 ldr r3,[r1,#32]
+ 106 00de 51F82E00 	 ldr r0,[r1,lr,lsl#2]
+ 107 00e2 41F82E20 	 str r2,[r1,lr,lsl#2]
+ 108 00e6 B644     	 add lr,lr,r6
+ 109 00e8 5FFA8EFE 	 uxtb lr,lr
+ 110 00ec BEF1050F 	 cmp lr,#5
+ 111 00f0 88BF     	 it hi
+ 112 00f2 CE61     	 strhi r6,[r1,#28]
+ 113 00f4 A3EB0003 	 sub r3,r3,r0
+ 114 00f8 1344     	 add r3,r3,r2
+ 115 00fa 8A61     	 str r2,[r1,#24]
+ 116 00fc CA69     	 ldr r2,[r1,#28]
+ 117 00fe 94BF     	 ite ls
+ 118 0100 81F829E0 	 strbls lr,[r1,#41]
+ 119 0104 81F82970 	 strbhi r7,[r1,#41]
+ 120 0108 012A     	 cmp r2,#1
+ 121 010a 0B62     	 str r3,[r1,#32]
+ 122 010c 05D1     	 bne .L16
+ 123 010e 2BB1     	 cbz r3,.L9
+ 124 0110 384A     	 ldr r2,.L20+24
+ 125 0112 526A     	 ldr r2,[r2,#36]
+ 126 0114 B2FBF3F3 	 udiv r3,r2,r3
+ 127 0118 00E0     	 b .L9
+ 128              	.L16:
+ 129 011a 0023     	 movs r3,#0
+ 130              	.L9:
+ 131 011c E26F     	 ldr r2,[r4,#124]
+ 132 011e 5343     	 muls r3,r2,r3
+ 133 0120 D4F8BC20 	 ldr r2,[r4,#188]
+ 134 0124 5A43     	 muls r2,r3,r2
+ 135 0126 9212     	 asrs r2,r2,#10
+ 136 0128 E266     	 str r2,[r4,#108]
+ 137              	.L6:
+ 138 012a 2C4B     	 ldr r3,.L20
+ 139 012c D3F80031 	 ldr r3,[r3,#256]
+ 140 0130 C3F34213 	 ubfx r3,r3,#5,#3
+ 141 0134 6B74     	 strb r3,[r5,#17]
+ 142 0136 08E0     	 b .L10
+ 143              	.L4:
+ 144 0138 936E     	 ldr r3,[r2,#104]
+ 145 013a 43F00803 	 orr r3,r3,#8
+ 146 013e 9366     	 str r3,[r2,#104]
+ 147 0140 0823     	 movs r3,#8
+ 148 0142 82F86430 	 strb r3,[r2,#100]
+ 149 0146 FFF7FEFF 	 bl Motor0_BLDC_SCALAR_MotorStop
+ 150              	.L10:
+ 151 014a 0222     	 movs r2,#2
+ 152 014c 234B     	 ldr r3,.L20
+ 153 014e 40E0     	 b .L18
+ 154              	.L2:
+ 155 0150 264C     	 ldr r4,.L20+16
+ 156 0152 6369     	 ldr r3,[r4,#20]
+ 157 0154 0133     	 adds r3,r3,#1
+ 158 0156 0022     	 movs r2,#0
+ 159 0158 012B     	 cmp r3,#1
+ 160 015a 6361     	 str r3,[r4,#20]
+ 161 015c A260     	 str r2,[r4,#8]
+ 162 015e 05D1     	 bne .L12
+ 163 0160 227C     	 ldrb r2,[r4,#16]
+ 164 0162 1AB9     	 cbnz r2,.L12
+ 165 0164 1F4A     	 ldr r2,.L20+8
+ 166 0166 2374     	 strb r3,[r4,#16]
+ 167 0168 926F     	 ldr r2,[r2,#120]
+ 168 016a E260     	 str r2,[r4,#12]
+ 169              	.L12:
+ 170 016c 2248     	 ldr r0,.L20+28
+ 171 016e E668     	 ldr r6,[r4,#12]
+ 172 0170 1E4F     	 ldr r7,.L20+16
+ 173 0172 0321     	 movs r1,#3
+ 174 0174 FFF7FEFF 	 bl XMC_CCU4_SLICE_GetCaptureRegisterValue
+ 175 0178 6369     	 ldr r3,[r4,#20]
+ 176 017a 06F00806 	 and r6,r6,#8
+ 177 017e 012B     	 cmp r3,#1
+ 178 0180 F6B2     	 uxtb r6,r6
+ 179 0182 17D9     	 bls .L14
+ 180 0184 3B78     	 ldrb r3,[r7]
+ 181 0186 ABB9     	 cbnz r3,.L14
+ 182 0188 0321     	 movs r1,#3
+ 183 018a 1B48     	 ldr r0,.L20+28
+ 184 018c FFF7FEFF 	 bl XMC_CCU4_SLICE_GetCaptureRegisterValue
+ 185 0190 C0F30343 	 ubfx r3,r0,#16,#4
+ 186 0194 053B     	 subs r3,r3,#5
+ 187 0196 164A     	 ldr r2,.L20+20
+ 188 0198 80B2     	 uxth r0,r0
+ 189 019a 52F82310 	 ldr r1,[r2,r3,lsl#2]
+ 190 019e 7A68     	 ldr r2,[r7,#4]
+ 191 01a0 9840     	 lsls r0,r0,r3
+ 192 01a2 7B69     	 ldr r3,[r7,#20]
+ 193 01a4 0A44     	 add r2,r2,r1
+ 194 01a6 032B     	 cmp r3,#3
+ 195 01a8 1044     	 add r0,r0,r2
+ 196 01aa 08BF     	 it eq
+ 197 01ac 0123     	 moveq r3,#1
+ 198 01ae 7860     	 str r0,[r7,#4]
+ 199 01b0 08BF     	 it eq
+ 200 01b2 3B70     	 strbeq r3,[r7]
+ 201              	.L14:
+ 202 01b4 094B     	 ldr r3,.L20
+ 203 01b6 D3F80021 	 ldr r2,[r3,#256]
+ 204 01ba C2F34212 	 ubfx r2,r2,#5,#3
+ 205 01be 6A74     	 strb r2,[r5,#17]
+ 206 01c0 1A6B     	 ldr r2,[r3,#48]
+ 207 01c2 3544     	 add r5,r5,r6
+ 208 01c4 C2F3C202 	 ubfx r2,r2,#3,#3
+ 209 01c8 AA5C     	 ldrb r2,[r5,r2]
+ 210 01ca 02F03F02 	 and r2,r2,#63
+ 211 01ce 5A63     	 str r2,[r3,#52]
+ 212 01d0 0122     	 movs r2,#1
+ 213              	.L18:
+ 214 01d2 DA67     	 str r2,[r3,#124]
+ 215 01d4 03B0     	 add sp,sp,#12
+ 216              	 
+ 217 01d6 BDE8F08F 	 pop {r4,r5,r6,r7,r8,r9,r10,fp,pc}
+ 218              	.L21:
+ 219 01da 00BF     	 .align 2
+ 220              	.L20:
+ 221 01dc 00800240 	 .word 1073905664
+ 222 01e0 00000000 	 .word Motor0_BLDC_SCALAR_Hall
+ 223 01e4 00000000 	 .word Motor0_BLDC_SCALAR
+ 224 01e8 00000000 	 .word Motor0_BLDC_SCALAR_CurrentMeasurement
+ 225 01ec 00000000 	 .word Motor0_BLDC_SCALAR_HALL_CatchFree
+ 226 01f0 00000000 	 .word BLDC_SCALAR_SPEED_POS_HALL_Cap_Array
+ 227 01f4 00000000 	 .word Motor0_BLDC_SCALAR_SPEED_POS_HALL
+ 228 01f8 00C20040 	 .word 1073791488
+ 229 01fc 00C00040 	 .word 1073790976
+ 231              	 .ident "GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20141119 (release) [ARM/embedded-4_9-branch revision 218278]"
+DEFINED SYMBOLS
+                            *ABS*:00000000 bldc_scalar_hall_event.c
+    {standard input}:17     .ram_code:00000000 $t
+    {standard input}:22     .ram_code:00000000 POSIF0_0_IRQHandler
+    {standard input}:221    .ram_code:000001dc $d
+
+UNDEFINED SYMBOLS
+Motor0_BLDC_SCALAR_PatternInitiator
+XMC_CCU4_SLICE_SetPrescaler
+Motor0_BLDC_SCALAR_MotorStop
+XMC_CCU4_SLICE_GetCaptureRegisterValue
+Motor0_BLDC_SCALAR_Hall
+Motor0_BLDC_SCALAR
+Motor0_BLDC_SCALAR_CurrentMeasurement
+Motor0_BLDC_SCALAR_HALL_CatchFree
+BLDC_SCALAR_SPEED_POS_HALL_Cap_Array
+Motor0_BLDC_SCALAR_SPEED_POS_HALL

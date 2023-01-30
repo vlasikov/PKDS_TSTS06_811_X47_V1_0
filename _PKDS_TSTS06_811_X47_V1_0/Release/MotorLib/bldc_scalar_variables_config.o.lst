@@ -1,0 +1,234 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu fpv4-sp-d16
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,4
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "bldc_scalar_variables_config.c"
+  16              	 .global Motor0_BLDC_SCALAR
+  17              	 .global Motor0_BLDC_SCALAR_HALL_CatchFree
+  18              	 .global Motor0_BLDC_SCALAR_Hall
+  19              	 .global Motor0_BLDC_SCALAR_SpeedControl
+  20              	 .global Motor0_BLDC_SCALAR_CurrentMeasurement
+  21              	 .global Motor0_BLDC_SCALAR_SPEED_POS_HALL
+  22              	 .global Motor0_BLDC_SCALAR_PWM_BC
+  23              	 .global Motor0_BLDC_SCALAR_Ramp
+  24              	 .global Motor0_BLDC_SCALAR_PT1_DirectCurrent
+  25              	 .global Motor0_BLDC_SCALAR_SpeedControl_PI
+  26              	 .section .data.Motor0_BLDC_SCALAR_SPEED_POS_HALL,"aw",%progbits
+  27              	 .align 2
+  30              	Motor0_BLDC_SCALAR_SPEED_POS_HALL:
+  31 0000 00000000 	 .word 0
+  32 0004 00000000 	 .word 0
+  33 0008 00000000 	 .word 0
+  34 000c 00000000 	 .word 0
+  35 0010 00000000 	 .word 0
+  36 0014 00000000 	 .word 0
+  37 0018 503A690D 	 .word 225000016
+  38 001c 00000000 	 .word 0
+  39 0020 00000000 	 .word 0
+  40 0024 503A690D 	 .word 225000016
+  41 0028 00       	 .byte 0
+  42 0029 00       	 .byte 0
+  43 002a 0000     	 .space 2
+  44              	 .section .data.Motor0_BLDC_SCALAR_Ramp,"aw",%progbits
+  45              	 .align 2
+  48              	Motor0_BLDC_SCALAR_Ramp:
+  49 0000 00000000 	 .word 0
+  50 0004 00000000 	 .space 8
+  50      00000000 
+  51 000c FCA60D00 	 .word 894716
+  52 0010 FCA60D00 	 .word 894716
+  53              	 .section .data.Motor0_BLDC_SCALAR_SpeedControl,"aw",%progbits
+  54              	 .align 2
+  57              	Motor0_BLDC_SCALAR_SpeedControl:
+  58 0000 AA020000 	 .word 682
+  59 0004 10110000 	 .word 4368
+  60 0008 00000000 	 .space 8
+  60      00000000 
+  61              	 .section .data.Motor0_BLDC_SCALAR_PWM_BC,"aw",%progbits
+  62              	 .align 2
+  65              	Motor0_BLDC_SCALAR_PWM_BC:
+  66 0000 00000000 	 .word Motor0_BLDC_SCALAR_CCU8_PWM_Config
+  67 0004 00000000 	 .word Motor0_BLDC_SCALAR_PWM_BC_HsShadowMod
+  68 0008 00000000 	 .word Motor0_BLDC_SCALAR_PWM_BC_HsImmediateMod
+  69 000c 01       	 .byte 1
+  70 000d 01       	 .byte 1
+  71 000e 00000000 	 .space 4
+  72 0012 0001     	 .short 256
+  73 0014 1000     	 .short 16
+  74 0016 0100     	 .short 1
+  75 0018 0003     	 .short 768
+  76 001a 3000     	 .short 48
+  77 001c 0300     	 .short 3
+  78 001e 0000     	 .short 0
+  79 0020 00000000 	 .space 6
+  79      0000
+  80 0026 B80B     	 .short 3000
+  81              	 .section .data.Motor0_BLDC_SCALAR_Hall,"aw",%progbits
+  84              	Motor0_BLDC_SCALAR_Hall:
+  85 0000 00       	 .byte 0
+  86 0001 19       	 .byte 25
+  87 0002 32       	 .byte 50
+  88 0003 13       	 .byte 19
+  89 0004 2C       	 .byte 44
+  90 0005 0D       	 .byte 13
+  91 0006 26       	 .byte 38
+  92 0007 00       	 .byte 0
+  93 0008 00       	 .byte 0
+  94 0009 29       	 .byte 41
+  95 000a 1A       	 .byte 26
+  96 000b 0B       	 .byte 11
+  97 000c 34       	 .byte 52
+  98 000d 25       	 .byte 37
+  99 000e 16       	 .byte 22
+ 100 000f 00       	 .byte 0
+ 101 0010 0000     	 .space 2
+ 102              	 .section .data.Motor0_BLDC_SCALAR_PT1_DirectCurrent,"aw",%progbits
+ 103              	 .align 2
+ 106              	Motor0_BLDC_SCALAR_PT1_DirectCurrent:
+ 107 0000 45170000 	 .word 5957
+ 108 0004 00000000 	 .space 4
+ 109 0008 0000FF3F 	 .word 1073676288
+ 110 000c 00000000 	 .word 0
+ 111 0010 00000000 	 .word 0
+ 112 0014 00000000 	 .space 4
+ 113              	 .section .data.Motor0_BLDC_SCALAR,"aw",%progbits
+ 114              	 .align 2
+ 117              	Motor0_BLDC_SCALAR:
+ 118 0000 00000000 	 .space 4
+ 119 0004 0000     	 .short 0
+ 120 0006 00000000 	 .space 30
+ 120      00000000 
+ 120      00000000 
+ 120      00000000 
+ 120      00000000 
+ 121 0024 0000     	 .short 0
+ 122 0026 0201     	 .short 258
+ 123 0028 1002     	 .short 528
+ 124 002a 1200     	 .short 18
+ 125 002c 2100     	 .short 33
+ 126 002e 2001     	 .short 288
+ 127 0030 0102     	 .short 513
+ 128 0032 0000     	 .short 0
+ 129 0034 0000     	 .short 0
+ 130 0036 0102     	 .short 513
+ 131 0038 2001     	 .short 288
+ 132 003a 2100     	 .short 33
+ 133 003c 1200     	 .short 18
+ 134 003e 1002     	 .short 528
+ 135 0040 0201     	 .short 258
+ 136 0042 0000     	 .short 0
+ 137 0044 0000     	 .short 0
+ 138 0046 0201     	 .short 258
+ 139 0048 1002     	 .short 528
+ 140 004a 1200     	 .short 18
+ 141 004c 2100     	 .short 33
+ 142 004e 2001     	 .short 288
+ 143 0050 0102     	 .short 513
+ 144 0052 0000     	 .short 0
+ 145 0054 0000     	 .short 0
+ 146 0056 0102     	 .short 513
+ 147 0058 2001     	 .short 288
+ 148 005a 2100     	 .short 33
+ 149 005c 1200     	 .short 18
+ 150 005e 1002     	 .short 528
+ 151 0060 0201     	 .short 258
+ 152 0062 0000     	 .short 0
+ 153 0064 00       	 .byte 0
+ 154 0065 000000   	 .space 3
+ 155 0068 00000000 	 .word 0
+ 156 006c 00000000 	 .space 12
+ 156      00000000 
+ 156      00000000 
+ 157 0078 01000000 	 .word 1
+ 158 007c 00000000 	 .space 12
+ 158      00000000 
+ 158      00000000 
+ 159 0088 FF3F0000 	 .word 16383
+ 160 008c 00000000 	 .space 12
+ 160      00000000 
+ 160      00000000 
+ 161 0098 FF3F0000 	 .word 16383
+ 162 009c 00000000 	 .word 0
+ 163 00a0 5B3F0000 	 .word 16219
+ 164 00a4 47010000 	 .word 327
+ 165 00a8 E8030000 	 .word 1000
+ 166 00ac 00000000 	 .space 4
+ 167 00b0 60090000 	 .word 2400
+ 168 00b4 10000000 	 .word 16
+ 169 00b8 30000000 	 .word 48
+ 170 00bc CB070000 	 .word 1995
+ 171 00c0 B70B     	 .short 2999
+ 172 00c2 01       	 .byte 1
+ 173 00c3 00       	 .space 1
+ 174              	 .section .data.Motor0_BLDC_SCALAR_HALL_CatchFree,"aw",%progbits
+ 175              	 .align 2
+ 178              	Motor0_BLDC_SCALAR_HALL_CatchFree:
+ 179 0000 00000000 	 .space 24
+ 179      00000000 
+ 179      00000000 
+ 179      00000000 
+ 179      00000000 
+ 180 0018 33030000 	 .word 819
+ 181 001c FA000000 	 .word 250
+ 182              	 .section .data.Motor0_BLDC_SCALAR_SpeedControl_PI,"aw",%progbits
+ 183              	 .align 2
+ 186              	Motor0_BLDC_SCALAR_SpeedControl_PI:
+ 187 0000 00000000 	 .space 8
+ 187      00000000 
+ 188 0008 35C3FFFF 	 .word -15563
+ 189 000c CB3C0000 	 .word 15563
+ 190 0010 D007     	 .short 2000
+ 191 0012 1E00     	 .short 30
+ 192 0014 0F       	 .byte 15
+ 193 0015 01       	 .byte 1
+ 194 0016 0000     	 .space 2
+ 195              	 .section .data.Motor0_BLDC_SCALAR_CurrentMeasurement,"aw",%progbits
+ 196              	 .align 2
+ 199              	Motor0_BLDC_SCALAR_CurrentMeasurement:
+ 200 0000 00000000 	 .word 0
+ 201 0004 00000000 	 .word 0
+ 202 0008 FCFF0000 	 .word 65532
+ 203 000c 249B0000 	 .word 39716
+ 204 0010 00000000 	 .space 4
+ 205 0014 94000000 	 .word Motor0_BLDC_SCALAR+148
+ 206 0018 02000000 	 .word 2
+ 207 001c 00000000 	 .space 8
+ 207      00000000 
+ 208              	 .ident "GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20141119 (release) [ARM/embedded-4_9-branch revision 218278]"
+DEFINED SYMBOLS
+                            *ABS*:00000000 bldc_scalar_variables_config.c
+    {standard input}:117    .data.Motor0_BLDC_SCALAR:00000000 Motor0_BLDC_SCALAR
+    {standard input}:178    .data.Motor0_BLDC_SCALAR_HALL_CatchFree:00000000 Motor0_BLDC_SCALAR_HALL_CatchFree
+    {standard input}:84     .data.Motor0_BLDC_SCALAR_Hall:00000000 Motor0_BLDC_SCALAR_Hall
+    {standard input}:57     .data.Motor0_BLDC_SCALAR_SpeedControl:00000000 Motor0_BLDC_SCALAR_SpeedControl
+    {standard input}:199    .data.Motor0_BLDC_SCALAR_CurrentMeasurement:00000000 Motor0_BLDC_SCALAR_CurrentMeasurement
+    {standard input}:30     .data.Motor0_BLDC_SCALAR_SPEED_POS_HALL:00000000 Motor0_BLDC_SCALAR_SPEED_POS_HALL
+    {standard input}:65     .data.Motor0_BLDC_SCALAR_PWM_BC:00000000 Motor0_BLDC_SCALAR_PWM_BC
+    {standard input}:48     .data.Motor0_BLDC_SCALAR_Ramp:00000000 Motor0_BLDC_SCALAR_Ramp
+    {standard input}:106    .data.Motor0_BLDC_SCALAR_PT1_DirectCurrent:00000000 Motor0_BLDC_SCALAR_PT1_DirectCurrent
+    {standard input}:186    .data.Motor0_BLDC_SCALAR_SpeedControl_PI:00000000 Motor0_BLDC_SCALAR_SpeedControl_PI
+    {standard input}:27     .data.Motor0_BLDC_SCALAR_SPEED_POS_HALL:00000000 $d
+    {standard input}:45     .data.Motor0_BLDC_SCALAR_Ramp:00000000 $d
+    {standard input}:54     .data.Motor0_BLDC_SCALAR_SpeedControl:00000000 $d
+    {standard input}:62     .data.Motor0_BLDC_SCALAR_PWM_BC:00000000 $d
+    {standard input}:101    .data.Motor0_BLDC_SCALAR_Hall:00000010 $d
+    {standard input}:103    .data.Motor0_BLDC_SCALAR_PT1_DirectCurrent:00000000 $d
+    {standard input}:114    .data.Motor0_BLDC_SCALAR:00000000 $d
+    {standard input}:175    .data.Motor0_BLDC_SCALAR_HALL_CatchFree:00000000 $d
+    {standard input}:183    .data.Motor0_BLDC_SCALAR_SpeedControl_PI:00000000 $d
+    {standard input}:196    .data.Motor0_BLDC_SCALAR_CurrentMeasurement:00000000 $d
+
+UNDEFINED SYMBOLS
+Motor0_BLDC_SCALAR_CCU8_PWM_Config
+Motor0_BLDC_SCALAR_PWM_BC_HsShadowMod
+Motor0_BLDC_SCALAR_PWM_BC_HsImmediateMod

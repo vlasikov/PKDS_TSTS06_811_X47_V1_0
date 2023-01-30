@@ -1,0 +1,180 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu fpv4-sp-d16
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,4
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "ccu8.c"
+  16              	 .section .text.Motor0_BLDC_SCALAR_CCU8_PWM_Init,"ax",%progbits
+  17              	 .align 1
+  18              	 .global Motor0_BLDC_SCALAR_CCU8_PWM_Init
+  19              	 .thumb
+  20              	 .thumb_func
+  22              	Motor0_BLDC_SCALAR_CCU8_PWM_Init:
+  23              	 
+  24              	 
+  25 0000 2DE9F041 	 push {r4,r5,r6,r7,r8,lr}
+  26 0004 2B48     	 ldr r0,.L5
+  27 0006 0021     	 movs r1,#0
+  28 0008 FFF7FEFF 	 bl XMC_CCU8_Init
+  29 000c 0027     	 movs r7,#0
+  30              	.L2:
+  31 000e 2A4C     	 ldr r4,.L5+4
+  32 0010 DFF8A080 	 ldr r8,.L5
+  33 0014 54F82750 	 ldr r5,[r4,r7,lsl#2]
+  34 0018 2849     	 ldr r1,.L5+8
+  35 001a E319     	 adds r3,r4,r7
+  36 001c 0126     	 movs r6,#1
+  37 001e 1B7B     	 ldrb r3,[r3,#12]
+  38 0020 06FA03F3 	 lsl r3,r6,r3
+  39 0024 C8F80C30 	 str r3,[r8,#12]
+  40 0028 2846     	 mov r0,r5
+  41 002a FFF7FEFF 	 bl XMC_CCU8_SLICE_CompareInit
+  42 002e 2846     	 mov r0,r5
+  43 0030 618A     	 ldrh r1,[r4,#18]
+  44 0032 FFF7FEFF 	 bl XMC_CCU8_SLICE_SetTimerPeriodMatch
+  45 0036 2846     	 mov r0,r5
+  46 0038 3146     	 mov r1,r6
+  47 003a 214A     	 ldr r2,.L5+12
+  48 003c FFF7FEFF 	 bl XMC_CCU8_SLICE_ConfigureEvent
+  49 0040 2846     	 mov r0,r5
+  50 0042 3146     	 mov r1,r6
+  51 0044 3246     	 mov r2,r6
+  52 0046 FFF7FEFF 	 bl XMC_CCU8_SLICE_StartConfig
+  53 004a 2846     	 mov r0,r5
+  54 004c 0221     	 movs r1,#2
+  55 004e 1D4A     	 ldr r2,.L5+16
+  56 0050 FFF7FEFF 	 bl XMC_CCU8_SLICE_ConfigureEvent
+  57 0054 0221     	 movs r1,#2
+  58 0056 0A46     	 mov r2,r1
+  59 0058 2846     	 mov r0,r5
+  60 005a FFF7FEFF 	 bl XMC_CCU8_SLICE_StopConfig
+  61 005e 3744     	 add r7,r7,r6
+  62 0060 2846     	 mov r0,r5
+  63 0062 1949     	 ldr r1,.L5+20
+  64 0064 FFF7FEFF 	 bl XMC_CCU8_SLICE_DeadTimeInit
+  65 0068 032F     	 cmp r7,#3
+  66 006a D0D1     	 bne .L2
+  67 006c 2568     	 ldr r5,[r4]
+  68 006e 3146     	 mov r1,r6
+  69 0070 2846     	 mov r0,r5
+  70 0072 0022     	 movs r2,#0
+  71 0074 FFF7FEFF 	 bl XMC_CCU8_SLICE_SetInterruptNode
+  72 0078 D5F8A430 	 ldr r3,[r5,#164]
+  73 007c 43F00203 	 orr r3,r3,#2
+  74 0080 C5F8A430 	 str r3,[r5,#164]
+  75 0084 6568     	 ldr r5,[r4,#4]
+  76 0086 0521     	 movs r1,#5
+  77 0088 2846     	 mov r0,r5
+  78 008a 0222     	 movs r2,#2
+  79 008c FFF7FEFF 	 bl XMC_CCU8_SLICE_SetInterruptNode
+  80 0090 D5F8A430 	 ldr r3,[r5,#164]
+  81 0094 6068     	 ldr r0,[r4,#4]
+  82 0096 228A     	 ldrh r2,[r4,#16]
+  83 0098 43F02003 	 orr r3,r3,#32
+  84 009c C5F8A430 	 str r3,[r5,#164]
+  85 00a0 3146     	 mov r1,r6
+  86 00a2 FFF7FEFF 	 bl XMC_CCU8_SLICE_SetTimerCompareMatch
+  87 00a6 40F21113 	 movw r3,#273
+  88 00aa C8F81030 	 str r3,[r8,#16]
+  89 00ae BDE8F081 	 pop {r4,r5,r6,r7,r8,pc}
+  90              	.L6:
+  91 00b2 00BF     	 .align 2
+  92              	.L5:
+  93 00b4 00000240 	 .word 1073872896
+  94 00b8 00000000 	 .word .LANCHOR0
+  95 00bc 00000000 	 .word .LANCHOR1
+  96 00c0 00000000 	 .word .LANCHOR2
+  97 00c4 00000000 	 .word .LANCHOR3
+  98 00c8 00000000 	 .word .LANCHOR4
+ 100              	 .global Motor0_BLDC_SCALAR_CCU8_PWM_Config
+ 101              	 .global Motor0_BLDC_SCALAR_CCU8CompareConf
+ 102              	 .global Motor0_BLDC_SCALAR_CCU8_DeadTimeConfig
+ 103              	 .global Motor0_BLDC_SCALAR_CCU8ExtStopEventConf
+ 104              	 .global Motor0_BLDC_SCALAR_CCU8ExtStartEventConf
+ 105              	 .section .data.Motor0_BLDC_SCALAR_CCU8_PWM_Config,"aw",%progbits
+ 106              	 .align 2
+ 107              	 .set .LANCHOR0,.+0
+ 110              	Motor0_BLDC_SCALAR_CCU8_PWM_Config:
+ 111 0000 00030240 	 .word 1073873664
+ 112 0004 00020240 	 .word 1073873408
+ 113 0008 00010240 	 .word 1073873152
+ 114 000c 02       	 .byte 2
+ 115 000d 01       	 .byte 1
+ 116 000e 00       	 .byte 0
+ 117 000f 00       	 .space 1
+ 118 0010 AB0B     	 .short 2987
+ 119 0012 B70B     	 .short 2999
+ 120              	 .section .data.Motor0_BLDC_SCALAR_CCU8_DeadTimeConfig,"aw",%progbits
+ 121              	 .align 2
+ 122              	 .set .LANCHOR4,.+0
+ 125              	Motor0_BLDC_SCALAR_CCU8_DeadTimeConfig:
+ 126 0000 00       	 .byte 0
+ 127 0001 000000   	 .space 3
+ 128 0004 0D       	 .byte 13
+ 129 0005 0E       	 .byte 14
+ 130 0006 0000     	 .space 2
+ 131 0008 00000000 	 .space 4
+ 132              	 .section .rodata.Motor0_BLDC_SCALAR_CCU8ExtStopEventConf,"a",%progbits
+ 133              	 .set .LANCHOR3,.+0
+ 136              	Motor0_BLDC_SCALAR_CCU8ExtStopEventConf:
+ 137 0000 07       	 .byte 7
+ 138 0001 02       	 .byte 2
+ 139 0002 00       	 .space 1
+ 140 0003 00       	 .byte 0
+ 141              	 .section .rodata.Motor0_BLDC_SCALAR_CCU8CompareConf,"a",%progbits
+ 142              	 .align 2
+ 143              	 .set .LANCHOR1,.+0
+ 146              	Motor0_BLDC_SCALAR_CCU8CompareConf:
+ 147 0000 01       	 .byte 1
+ 148 0001 00       	 .space 1
+ 149 0002 00       	 .byte 0
+ 150 0003 02       	 .byte 2
+ 151 0004 03       	 .byte 3
+ 152 0005 000000   	 .space 3
+ 153 0008 04       	 .byte 4
+ 154 0009 000000   	 .space 3
+ 155 000c 00       	 .byte 0
+ 156 000d 000000   	 .space 3
+ 157              	 .section .rodata.Motor0_BLDC_SCALAR_CCU8ExtStartEventConf,"a",%progbits
+ 158              	 .set .LANCHOR2,.+0
+ 161              	Motor0_BLDC_SCALAR_CCU8ExtStartEventConf:
+ 162 0000 07       	 .byte 7
+ 163 0001 01       	 .byte 1
+ 164 0002 00       	 .space 1
+ 165 0003 00       	 .byte 0
+ 166              	 .ident "GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20141119 (release) [ARM/embedded-4_9-branch revision 218278]"
+DEFINED SYMBOLS
+                            *ABS*:00000000 ccu8.c
+    {standard input}:17     .text.Motor0_BLDC_SCALAR_CCU8_PWM_Init:00000000 $t
+    {standard input}:22     .text.Motor0_BLDC_SCALAR_CCU8_PWM_Init:00000000 Motor0_BLDC_SCALAR_CCU8_PWM_Init
+    {standard input}:93     .text.Motor0_BLDC_SCALAR_CCU8_PWM_Init:000000b4 $d
+    {standard input}:110    .data.Motor0_BLDC_SCALAR_CCU8_PWM_Config:00000000 Motor0_BLDC_SCALAR_CCU8_PWM_Config
+    {standard input}:146    .rodata.Motor0_BLDC_SCALAR_CCU8CompareConf:00000000 Motor0_BLDC_SCALAR_CCU8CompareConf
+    {standard input}:125    .data.Motor0_BLDC_SCALAR_CCU8_DeadTimeConfig:00000000 Motor0_BLDC_SCALAR_CCU8_DeadTimeConfig
+    {standard input}:136    .rodata.Motor0_BLDC_SCALAR_CCU8ExtStopEventConf:00000000 Motor0_BLDC_SCALAR_CCU8ExtStopEventConf
+    {standard input}:161    .rodata.Motor0_BLDC_SCALAR_CCU8ExtStartEventConf:00000000 Motor0_BLDC_SCALAR_CCU8ExtStartEventConf
+    {standard input}:106    .data.Motor0_BLDC_SCALAR_CCU8_PWM_Config:00000000 $d
+    {standard input}:121    .data.Motor0_BLDC_SCALAR_CCU8_DeadTimeConfig:00000000 $d
+    {standard input}:139    .rodata.Motor0_BLDC_SCALAR_CCU8ExtStopEventConf:00000002 $d
+    {standard input}:142    .rodata.Motor0_BLDC_SCALAR_CCU8CompareConf:00000000 $d
+    {standard input}:164    .rodata.Motor0_BLDC_SCALAR_CCU8ExtStartEventConf:00000002 $d
+
+UNDEFINED SYMBOLS
+XMC_CCU8_Init
+XMC_CCU8_SLICE_CompareInit
+XMC_CCU8_SLICE_SetTimerPeriodMatch
+XMC_CCU8_SLICE_ConfigureEvent
+XMC_CCU8_SLICE_StartConfig
+XMC_CCU8_SLICE_StopConfig
+XMC_CCU8_SLICE_DeadTimeInit
+XMC_CCU8_SLICE_SetInterruptNode
+XMC_CCU8_SLICE_SetTimerCompareMatch

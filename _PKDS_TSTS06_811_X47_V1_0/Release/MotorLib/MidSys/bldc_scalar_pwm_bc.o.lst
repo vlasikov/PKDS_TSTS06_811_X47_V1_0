@@ -1,0 +1,406 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu fpv4-sp-d16
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,4
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "bldc_scalar_pwm_bc.c"
+  16              	 .section .text.Motor0_BLDC_SCALAR_PWM_BC_Init,"ax",%progbits
+  17              	 .align 1
+  18              	 .global Motor0_BLDC_SCALAR_PWM_BC_Init
+  19              	 .thumb
+  20              	 .thumb_func
+  22              	Motor0_BLDC_SCALAR_PWM_BC_Init:
+  23              	 
+  24              	 
+  25 0000 08B5     	 push {r3,lr}
+  26 0002 FFF7FEFF 	 bl Motor0_BLDC_SCALAR_CCU8_PWM_Init
+  27 0006 FFF7FEFF 	 bl Motor0_BLDC_SCALAR_GPIO_PWM_Init
+  28 000a FFF7FEFF 	 bl Motor0_BLDC_SCALAR_GPIO_Inverter_Init
+  29 000e 034B     	 ldr r3,.L2
+  30 0010 034A     	 ldr r2,.L2+4
+  31 0012 5B8A     	 ldrh r3,[r3,#18]
+  32 0014 0133     	 adds r3,r3,#1
+  33 0016 1384     	 strh r3,[r2,#32]
+  34 0018 08BD     	 pop {r3,pc}
+  35              	.L3:
+  36 001a 00BF     	 .align 2
+  37              	.L2:
+  38 001c 00000000 	 .word Motor0_BLDC_SCALAR_CCU8_PWM_Config
+  39 0020 00000000 	 .word Motor0_BLDC_SCALAR_PWM_BC
+  41              	 .section .text.Motor0_BLDC_SCALAR_PWM_BC_InverterEnable,"ax",%progbits
+  42              	 .align 1
+  43              	 .global Motor0_BLDC_SCALAR_PWM_BC_InverterEnable
+  44              	 .thumb
+  45              	 .thumb_func
+  47              	Motor0_BLDC_SCALAR_PWM_BC_InverterEnable:
+  48              	 
+  49              	 
+  50              	 
+  51 0000 064B     	 ldr r3,.L9
+  52 0002 5B7B     	 ldrb r3,[r3,#13]
+  53 0004 012B     	 cmp r3,#1
+  54 0006 02D1     	 bne .L5
+  55 0008 4FF40062 	 mov r2,#2048
+  56 000c 03E0     	 b .L7
+  57              	.L5:
+  58 000e 022B     	 cmp r3,#2
+  59 0010 03D1     	 bne .L4
+  60 0012 4FF00062 	 mov r2,#134217728
+  61              	.L7:
+  62 0016 024B     	 ldr r3,.L9+4
+  63 0018 5A60     	 str r2,[r3,#4]
+  64              	.L4:
+  65 001a 7047     	 bx lr
+  66              	.L10:
+  67              	 .align 2
+  68              	.L9:
+  69 001c 00000000 	 .word Motor0_BLDC_SCALAR_PWM_BC
+  70 0020 00820248 	 .word 1208123904
+  72              	 .section .text.Motor0_BLDC_SCALAR_PWM_BC_Start,"ax",%progbits
+  73              	 .align 1
+  74              	 .global Motor0_BLDC_SCALAR_PWM_BC_Start
+  75              	 .thumb
+  76              	 .thumb_func
+  78              	Motor0_BLDC_SCALAR_PWM_BC_Start:
+  79              	 
+  80              	 
+  81 0000 08B5     	 push {r3,lr}
+  82 0002 FFF7FEFF 	 bl Motor0_BLDC_SCALAR_PWM_BC_InverterEnable
+  83 0006 034A     	 ldr r2,.L12
+  84 0008 D36C     	 ldr r3,[r2,#76]
+  85 000a 43F48073 	 orr r3,r3,#256
+  86 000e D364     	 str r3,[r2,#76]
+  87 0010 08BD     	 pop {r3,pc}
+  88              	.L13:
+  89 0012 00BF     	 .align 2
+  90              	.L12:
+  91 0014 00400050 	 .word 1342193664
+  93              	 .section .text.Motor0_BLDC_SCALAR_PWM_BC_InverterDisable,"ax",%progbits
+  94              	 .align 1
+  95              	 .global Motor0_BLDC_SCALAR_PWM_BC_InverterDisable
+  96              	 .thumb
+  97              	 .thumb_func
+  99              	Motor0_BLDC_SCALAR_PWM_BC_InverterDisable:
+ 100              	 
+ 101              	 
+ 102              	 
+ 103 0000 064B     	 ldr r3,.L18
+ 104 0002 5B7B     	 ldrb r3,[r3,#13]
+ 105 0004 012B     	 cmp r3,#1
+ 106 0006 02D1     	 bne .L15
+ 107 0008 4FF00062 	 mov r2,#134217728
+ 108 000c 03E0     	 b .L17
+ 109              	.L15:
+ 110 000e 022B     	 cmp r3,#2
+ 111 0010 03D1     	 bne .L14
+ 112 0012 4FF40062 	 mov r2,#2048
+ 113              	.L17:
+ 114 0016 024B     	 ldr r3,.L18+4
+ 115 0018 5A60     	 str r2,[r3,#4]
+ 116              	.L14:
+ 117 001a 7047     	 bx lr
+ 118              	.L19:
+ 119              	 .align 2
+ 120              	.L18:
+ 121 001c 00000000 	 .word Motor0_BLDC_SCALAR_PWM_BC
+ 122 0020 00820248 	 .word 1208123904
+ 124              	 .section .text.Motor0_BLDC_SCALAR_PWM_BC_Stop,"ax",%progbits
+ 125              	 .align 1
+ 126              	 .global Motor0_BLDC_SCALAR_PWM_BC_Stop
+ 127              	 .thumb
+ 128              	 .thumb_func
+ 130              	Motor0_BLDC_SCALAR_PWM_BC_Stop:
+ 131              	 
+ 132              	 
+ 133 0000 08B5     	 push {r3,lr}
+ 134 0002 FFF7FEFF 	 bl Motor0_BLDC_SCALAR_PWM_BC_InverterDisable
+ 135 0006 034A     	 ldr r2,.L21
+ 136 0008 D36C     	 ldr r3,[r2,#76]
+ 137 000a 23F48073 	 bic r3,r3,#256
+ 138 000e D364     	 str r3,[r2,#76]
+ 139 0010 08BD     	 pop {r3,pc}
+ 140              	.L22:
+ 141 0012 00BF     	 .align 2
+ 142              	.L21:
+ 143 0014 00400050 	 .word 1342193664
+ 145              	 .section .ram_code,"ax",%progbits
+ 146              	 .align 1
+ 147              	 .global Motor0_BLDC_SCALAR_PWM_BC_HsImmediateMod_SyncRect
+ 148              	 .thumb
+ 149              	 .thumb_func
+ 151              	Motor0_BLDC_SCALAR_PWM_BC_HsImmediateMod_SyncRect:
+ 152              	 
+ 153              	 
+ 154 0000 10B5     	 push {r4,lr}
+ 155 0002 1349     	 ldr r1,.L29
+ 156 0004 0023     	 movs r3,#0
+ 157              	.L26:
+ 158 0006 134A     	 ldr r2,.L29+4
+ 159 0008 1A44     	 add r2,r2,r3
+ 160 000a 528A     	 ldrh r2,[r2,#18]
+ 161 000c 02EA0004 	 and r4,r2,r0
+ 162 0010 A242     	 cmp r2,r4
+ 163 0012 08D1     	 bne .L24
+ 164 0014 104A     	 ldr r2,.L29+8
+ 165 0016 52F81340 	 ldr r4,[r2,r3,lsl#1]
+ 166 001a E26C     	 ldr r2,[r4,#76]
+ 167 001c 42F00D02 	 orr r2,r2,#13
+ 168 0020 E264     	 str r2,[r4,#76]
+ 169 0022 0322     	 movs r2,#3
+ 170 0024 0CE0     	 b .L28
+ 171              	.L24:
+ 172 0026 5200     	 lsls r2,r2,#1
+ 173 0028 02EA0004 	 and r4,r2,r0
+ 174 002c A242     	 cmp r2,r4
+ 175 002e 08D1     	 bne .L25
+ 176 0030 094A     	 ldr r2,.L29+8
+ 177 0032 52F81340 	 ldr r4,[r2,r3,lsl#1]
+ 178 0036 E26C     	 ldr r2,[r4,#76]
+ 179 0038 22F00D02 	 bic r2,r2,#13
+ 180 003c E264     	 str r2,[r4,#76]
+ 181 003e 0122     	 movs r2,#1
+ 182              	.L28:
+ 183 0040 0A70     	 strb r2,[r1]
+ 184              	.L25:
+ 185 0042 0233     	 adds r3,r3,#2
+ 186 0044 062B     	 cmp r3,#6
+ 187 0046 01F10101 	 add r1,r1,#1
+ 188 004a DCD1     	 bne .L26
+ 189 004c 10BD     	 pop {r4,pc}
+ 190              	.L30:
+ 191 004e 00BF     	 .align 2
+ 192              	.L29:
+ 193 0050 0E000000 	 .word Motor0_BLDC_SCALAR_PWM_BC+14
+ 194 0054 00000000 	 .word Motor0_BLDC_SCALAR_PWM_BC
+ 195 0058 00000000 	 .word Motor0_BLDC_SCALAR_CCU8_PWM_Config
+ 197              	 .align 1
+ 198              	 .global Motor0_BLDC_SCALAR_PWM_BC_HsImmediateMod
+ 199              	 .thumb
+ 200              	 .thumb_func
+ 202              	Motor0_BLDC_SCALAR_PWM_BC_HsImmediateMod:
+ 203              	 
+ 204              	 
+ 205 005c 0B49     	 ldr r1,.L37
+ 206 005e 30B5     	 push {r4,r5,lr}
+ 207 0060 8A1E     	 subs r2,r1,#2
+ 208 0062 4C1C     	 adds r4,r1,#1
+ 209              	.L34:
+ 210 0064 31F8023F 	 ldrh r3,[r1,#2]!
+ 211 0068 00EA0305 	 and r5,r0,r3
+ 212 006c AB42     	 cmp r3,r5
+ 213 006e 01D1     	 bne .L32
+ 214 0070 0323     	 movs r3,#3
+ 215 0072 05E0     	 b .L36
+ 216              	.L32:
+ 217 0074 5B00     	 lsls r3,r3,#1
+ 218 0076 03EA0005 	 and r5,r3,r0
+ 219 007a AB42     	 cmp r3,r5
+ 220 007c 01D1     	 bne .L33
+ 221 007e 0123     	 movs r3,#1
+ 222              	.L36:
+ 223 0080 1370     	 strb r3,[r2]
+ 224              	.L33:
+ 225 0082 0132     	 adds r2,r2,#1
+ 226 0084 A242     	 cmp r2,r4
+ 227 0086 EDD1     	 bne .L34
+ 228 0088 30BD     	 pop {r4,r5,pc}
+ 229              	.L38:
+ 230 008a 00BF     	 .align 2
+ 231              	.L37:
+ 232 008c 10000000 	 .word Motor0_BLDC_SCALAR_PWM_BC+16
+ 234              	 .align 1
+ 235              	 .global Motor0_BLDC_SCALAR_PWM_BC_LsImmediateMod
+ 236              	 .thumb
+ 237              	 .thumb_func
+ 239              	Motor0_BLDC_SCALAR_PWM_BC_LsImmediateMod:
+ 240              	 
+ 241              	 
+ 242 0090 0B49     	 ldr r1,.L45
+ 243 0092 30B5     	 push {r4,r5,lr}
+ 244 0094 8A1E     	 subs r2,r1,#2
+ 245 0096 4C1C     	 adds r4,r1,#1
+ 246              	.L42:
+ 247 0098 31F8023F 	 ldrh r3,[r1,#2]!
+ 248 009c 00EA0305 	 and r5,r0,r3
+ 249 00a0 AB42     	 cmp r3,r5
+ 250 00a2 01D1     	 bne .L40
+ 251 00a4 0023     	 movs r3,#0
+ 252 00a6 05E0     	 b .L44
+ 253              	.L40:
+ 254 00a8 5B00     	 lsls r3,r3,#1
+ 255 00aa 03EA0005 	 and r5,r3,r0
+ 256 00ae AB42     	 cmp r3,r5
+ 257 00b0 01D1     	 bne .L41
+ 258 00b2 0223     	 movs r3,#2
+ 259              	.L44:
+ 260 00b4 1370     	 strb r3,[r2]
+ 261              	.L41:
+ 262 00b6 0132     	 adds r2,r2,#1
+ 263 00b8 A242     	 cmp r2,r4
+ 264 00ba EDD1     	 bne .L42
+ 265 00bc 30BD     	 pop {r4,r5,pc}
+ 266              	.L46:
+ 267 00be 00BF     	 .align 2
+ 268              	.L45:
+ 269 00c0 10000000 	 .word Motor0_BLDC_SCALAR_PWM_BC+16
+ 271              	 .align 1
+ 272              	 .global Motor0_BLDC_SCALAR_PWM_BC_HsShadowMod_SyncRect
+ 273              	 .thumb
+ 274              	 .thumb_func
+ 276              	Motor0_BLDC_SCALAR_PWM_BC_HsShadowMod_SyncRect:
+ 277              	 
+ 278              	 
+ 279 00c4 70B5     	 push {r4,r5,r6,lr}
+ 280 00c6 114C     	 ldr r4,.L53
+ 281 00c8 0023     	 movs r3,#0
+ 282 00ca A4F10802 	 sub r2,r4,#8
+ 283              	.L50:
+ 284 00ce 34F8025F 	 ldrh r5,[r4,#2]!
+ 285 00d2 2842     	 tst r0,r5
+ 286 00d4 13D1     	 bne .L48
+ 287 00d6 34F8065C 	 ldrh r5,[r4,#-6]
+ 288 00da 01EA0506 	 and r6,r1,r5
+ 289 00de B542     	 cmp r5,r6
+ 290 00e0 0B4D     	 ldr r5,.L53+4
+ 291 00e2 55F81360 	 ldr r6,[r5,r3,lsl#1]
+ 292 00e6 F56C     	 ldr r5,[r6,#76]
+ 293 00e8 0BBF     	 itete eq
+ 294 00ea 45F00D05 	 orreq r5,r5,#13
+ 295 00ee 25F00D05 	 bicne r5,r5,#13
+ 296 00f2 F564     	 streq r5,[r6,#76]
+ 297 00f4 F564     	 strne r5,[r6,#76]
+ 298 00f6 0CBF     	 ite eq
+ 299 00f8 0325     	 moveq r5,#3
+ 300 00fa 0125     	 movne r5,#1
+ 301 00fc 1570     	 strb r5,[r2]
+ 302              	.L48:
+ 303 00fe 0233     	 adds r3,r3,#2
+ 304 0100 062B     	 cmp r3,#6
+ 305 0102 02F10102 	 add r2,r2,#1
+ 306 0106 E2D1     	 bne .L50
+ 307 0108 70BD     	 pop {r4,r5,r6,pc}
+ 308              	.L54:
+ 309 010a 00BF     	 .align 2
+ 310              	.L53:
+ 311 010c 16000000 	 .word Motor0_BLDC_SCALAR_PWM_BC+22
+ 312 0110 00000000 	 .word Motor0_BLDC_SCALAR_CCU8_PWM_Config
+ 314              	 .align 1
+ 315              	 .global Motor0_BLDC_SCALAR_PWM_BC_HsShadowMod
+ 316              	 .thumb
+ 317              	 .thumb_func
+ 319              	Motor0_BLDC_SCALAR_PWM_BC_HsShadowMod:
+ 320              	 
+ 321              	 
+ 322 0114 0B4B     	 ldr r3,.L61
+ 323 0116 70B5     	 push {r4,r5,r6,lr}
+ 324 0118 A3F10802 	 sub r2,r3,#8
+ 325 011c 9D1D     	 adds r5,r3,#6
+ 326              	.L58:
+ 327 011e 33F8024F 	 ldrh r4,[r3,#2]!
+ 328 0122 2042     	 tst r0,r4
+ 329 0124 08D1     	 bne .L56
+ 330 0126 33F8064C 	 ldrh r4,[r3,#-6]
+ 331 012a 01EA0406 	 and r6,r1,r4
+ 332 012e B442     	 cmp r4,r6
+ 333 0130 0CBF     	 ite eq
+ 334 0132 0324     	 moveq r4,#3
+ 335 0134 0124     	 movne r4,#1
+ 336 0136 1470     	 strb r4,[r2]
+ 337              	.L56:
+ 338 0138 AB42     	 cmp r3,r5
+ 339 013a 02F10102 	 add r2,r2,#1
+ 340 013e EED1     	 bne .L58
+ 341 0140 70BD     	 pop {r4,r5,r6,pc}
+ 342              	.L62:
+ 343 0142 00BF     	 .align 2
+ 344              	.L61:
+ 345 0144 16000000 	 .word Motor0_BLDC_SCALAR_PWM_BC+22
+ 347              	 .align 1
+ 348              	 .global Motor0_BLDC_SCALAR_PWM_BC_LsShadowMod
+ 349              	 .thumb
+ 350              	 .thumb_func
+ 352              	Motor0_BLDC_SCALAR_PWM_BC_LsShadowMod:
+ 353              	 
+ 354              	 
+ 355 0148 0E4B     	 ldr r3,.L68
+ 356 014a F0B5     	 push {r4,r5,r6,r7,lr}
+ 357 014c A3F10804 	 sub r4,r3,#8
+ 358 0150 9E1D     	 adds r6,r3,#6
+ 359              	.L66:
+ 360 0152 33F8022F 	 ldrh r2,[r3,#2]!
+ 361 0156 10EA0205 	 ands r5,r0,r2
+ 362 015a 0ED1     	 bne .L64
+ 363 015c 33F8062C 	 ldrh r2,[r3,#-6]
+ 364 0160 01EA0207 	 and r7,r1,r2
+ 365 0164 BA42     	 cmp r2,r7
+ 366 0166 01D1     	 bne .L65
+ 367 0168 2570     	 strb r5,[r4]
+ 368 016a 06E0     	 b .L64
+ 369              	.L65:
+ 370 016c 5200     	 lsls r2,r2,#1
+ 371 016e 02EA0105 	 and r5,r2,r1
+ 372 0172 AA42     	 cmp r2,r5
+ 373 0174 04BF     	 itt eq
+ 374 0176 0222     	 moveq r2,#2
+ 375 0178 2270     	 strbeq r2,[r4]
+ 376              	.L64:
+ 377 017a B342     	 cmp r3,r6
+ 378 017c 04F10104 	 add r4,r4,#1
+ 379 0180 E7D1     	 bne .L66
+ 380 0182 F0BD     	 pop {r4,r5,r6,r7,pc}
+ 381              	.L69:
+ 382              	 .align 2
+ 383              	.L68:
+ 384 0184 16000000 	 .word Motor0_BLDC_SCALAR_PWM_BC+22
+ 386              	 .ident "GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20141119 (release) [ARM/embedded-4_9-branch revision 218278]"
+DEFINED SYMBOLS
+                            *ABS*:00000000 bldc_scalar_pwm_bc.c
+    {standard input}:17     .text.Motor0_BLDC_SCALAR_PWM_BC_Init:00000000 $t
+    {standard input}:22     .text.Motor0_BLDC_SCALAR_PWM_BC_Init:00000000 Motor0_BLDC_SCALAR_PWM_BC_Init
+    {standard input}:38     .text.Motor0_BLDC_SCALAR_PWM_BC_Init:0000001c $d
+    {standard input}:42     .text.Motor0_BLDC_SCALAR_PWM_BC_InverterEnable:00000000 $t
+    {standard input}:47     .text.Motor0_BLDC_SCALAR_PWM_BC_InverterEnable:00000000 Motor0_BLDC_SCALAR_PWM_BC_InverterEnable
+    {standard input}:69     .text.Motor0_BLDC_SCALAR_PWM_BC_InverterEnable:0000001c $d
+    {standard input}:73     .text.Motor0_BLDC_SCALAR_PWM_BC_Start:00000000 $t
+    {standard input}:78     .text.Motor0_BLDC_SCALAR_PWM_BC_Start:00000000 Motor0_BLDC_SCALAR_PWM_BC_Start
+    {standard input}:91     .text.Motor0_BLDC_SCALAR_PWM_BC_Start:00000014 $d
+    {standard input}:94     .text.Motor0_BLDC_SCALAR_PWM_BC_InverterDisable:00000000 $t
+    {standard input}:99     .text.Motor0_BLDC_SCALAR_PWM_BC_InverterDisable:00000000 Motor0_BLDC_SCALAR_PWM_BC_InverterDisable
+    {standard input}:121    .text.Motor0_BLDC_SCALAR_PWM_BC_InverterDisable:0000001c $d
+    {standard input}:125    .text.Motor0_BLDC_SCALAR_PWM_BC_Stop:00000000 $t
+    {standard input}:130    .text.Motor0_BLDC_SCALAR_PWM_BC_Stop:00000000 Motor0_BLDC_SCALAR_PWM_BC_Stop
+    {standard input}:143    .text.Motor0_BLDC_SCALAR_PWM_BC_Stop:00000014 $d
+    {standard input}:146    .ram_code:00000000 $t
+    {standard input}:151    .ram_code:00000000 Motor0_BLDC_SCALAR_PWM_BC_HsImmediateMod_SyncRect
+    {standard input}:193    .ram_code:00000050 $d
+    {standard input}:197    .ram_code:0000005c $t
+    {standard input}:202    .ram_code:0000005c Motor0_BLDC_SCALAR_PWM_BC_HsImmediateMod
+    {standard input}:232    .ram_code:0000008c $d
+    {standard input}:234    .ram_code:00000090 $t
+    {standard input}:239    .ram_code:00000090 Motor0_BLDC_SCALAR_PWM_BC_LsImmediateMod
+    {standard input}:269    .ram_code:000000c0 $d
+    {standard input}:271    .ram_code:000000c4 $t
+    {standard input}:276    .ram_code:000000c4 Motor0_BLDC_SCALAR_PWM_BC_HsShadowMod_SyncRect
+    {standard input}:311    .ram_code:0000010c $d
+    {standard input}:314    .ram_code:00000114 $t
+    {standard input}:319    .ram_code:00000114 Motor0_BLDC_SCALAR_PWM_BC_HsShadowMod
+    {standard input}:345    .ram_code:00000144 $d
+    {standard input}:347    .ram_code:00000148 $t
+    {standard input}:352    .ram_code:00000148 Motor0_BLDC_SCALAR_PWM_BC_LsShadowMod
+    {standard input}:384    .ram_code:00000184 $d
+
+UNDEFINED SYMBOLS
+Motor0_BLDC_SCALAR_CCU8_PWM_Init
+Motor0_BLDC_SCALAR_GPIO_PWM_Init
+Motor0_BLDC_SCALAR_GPIO_Inverter_Init
+Motor0_BLDC_SCALAR_CCU8_PWM_Config
+Motor0_BLDC_SCALAR_PWM_BC

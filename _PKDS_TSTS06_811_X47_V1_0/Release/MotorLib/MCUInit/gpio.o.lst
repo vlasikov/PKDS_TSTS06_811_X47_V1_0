@@ -1,0 +1,232 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu fpv4-sp-d16
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,4
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "gpio.c"
+  16              	 .section .text.Motor0_BLDC_SCALAR_GPIO_PWM_Init,"ax",%progbits
+  17              	 .align 1
+  18              	 .global Motor0_BLDC_SCALAR_GPIO_PWM_Init
+  19              	 .thumb
+  20              	 .thumb_func
+  22              	Motor0_BLDC_SCALAR_GPIO_PWM_Init:
+  23              	 
+  24              	 
+  25 0000 38B5     	 push {r3,r4,r5,lr}
+  26 0002 114C     	 ldr r4,.L2
+  27 0004 114D     	 ldr r5,.L2+4
+  28 0006 124A     	 ldr r2,.L2+8
+  29 0008 2046     	 mov r0,r4
+  30 000a 0921     	 movs r1,#9
+  31 000c FFF7FEFF 	 bl XMC_GPIO_Init
+  32 0010 2846     	 mov r0,r5
+  33 0012 0E21     	 movs r1,#14
+  34 0014 0F4A     	 ldr r2,.L2+12
+  35 0016 FFF7FEFF 	 bl XMC_GPIO_Init
+  36 001a 2046     	 mov r0,r4
+  37 001c 0A21     	 movs r1,#10
+  38 001e 0E4A     	 ldr r2,.L2+16
+  39 0020 FFF7FEFF 	 bl XMC_GPIO_Init
+  40 0024 2846     	 mov r0,r5
+  41 0026 0F21     	 movs r1,#15
+  42 0028 0C4A     	 ldr r2,.L2+20
+  43 002a FFF7FEFF 	 bl XMC_GPIO_Init
+  44 002e 2046     	 mov r0,r4
+  45 0030 0B21     	 movs r1,#11
+  46 0032 0B4A     	 ldr r2,.L2+24
+  47 0034 FFF7FEFF 	 bl XMC_GPIO_Init
+  48 0038 2046     	 mov r0,r4
+  49 003a 0821     	 movs r1,#8
+  50 003c 094A     	 ldr r2,.L2+28
+  51 003e BDE83840 	 pop {r3,r4,r5,lr}
+  52 0042 FFF7FEBF 	 b XMC_GPIO_Init
+  53              	.L3:
+  54 0046 00BF     	 .align 2
+  55              	.L2:
+  56 0048 00850248 	 .word 1208124672
+  57 004c 00820248 	 .word 1208123904
+  58 0050 00000000 	 .word .LANCHOR0
+  59 0054 00000000 	 .word .LANCHOR1
+  60 0058 00000000 	 .word .LANCHOR2
+  61 005c 00000000 	 .word .LANCHOR3
+  62 0060 00000000 	 .word .LANCHOR4
+  63 0064 00000000 	 .word .LANCHOR5
+  65              	 .section .text.Motor0_BLDC_SCALAR_GPIO_3Hall_Init,"ax",%progbits
+  66              	 .align 1
+  67              	 .global Motor0_BLDC_SCALAR_GPIO_3Hall_Init
+  68              	 .thumb
+  69              	 .thumb_func
+  71              	Motor0_BLDC_SCALAR_GPIO_3Hall_Init:
+  72              	 
+  73              	 
+  74 0000 38B5     	 push {r3,r4,r5,lr}
+  75 0002 094D     	 ldr r5,.L5
+  76 0004 094C     	 ldr r4,.L5+4
+  77 0006 2846     	 mov r0,r5
+  78 0008 2246     	 mov r2,r4
+  79 000a 0321     	 movs r1,#3
+  80 000c FFF7FEFF 	 bl XMC_GPIO_Init
+  81 0010 2846     	 mov r0,r5
+  82 0012 2246     	 mov r2,r4
+  83 0014 0221     	 movs r1,#2
+  84 0016 FFF7FEFF 	 bl XMC_GPIO_Init
+  85 001a 2846     	 mov r0,r5
+  86 001c 2246     	 mov r2,r4
+  87 001e 0121     	 movs r1,#1
+  88 0020 BDE83840 	 pop {r3,r4,r5,lr}
+  89 0024 FFF7FEBF 	 b XMC_GPIO_Init
+  90              	.L6:
+  91              	 .align 2
+  92              	.L5:
+  93 0028 00810248 	 .word 1208123648
+  94 002c 00000000 	 .word .LANCHOR6
+  96              	 .section .text.Motor0_BLDC_SCALAR_GPIO_Inverter_Init,"ax",%progbits
+  97              	 .align 1
+  98              	 .global Motor0_BLDC_SCALAR_GPIO_Inverter_Init
+  99              	 .thumb
+ 100              	 .thumb_func
+ 102              	Motor0_BLDC_SCALAR_GPIO_Inverter_Init:
+ 103              	 
+ 104              	 
+ 105              	 
+ 106 0000 0248     	 ldr r0,.L8
+ 107 0002 034A     	 ldr r2,.L8+4
+ 108 0004 0B21     	 movs r1,#11
+ 109 0006 FFF7FEBF 	 b XMC_GPIO_Init
+ 110              	.L9:
+ 111 000a 00BF     	 .align 2
+ 112              	.L8:
+ 113 000c 00820248 	 .word 1208123904
+ 114 0010 00000000 	 .word .LANCHOR7
+ 116              	 .global Motor0_BLDC_SCALAR_GPIO_Inverter_Config
+ 117              	 .global Motor0_BLDC_SCALAR_GPIO_PWM_Config
+ 118              	 .global Motor0_BLDC_SCALAR_GPIO_Hall_Config
+ 119              	 .global Motor0_BLDC_SCALAR_GPIO_PhW_Low_Config
+ 120              	 .global Motor0_BLDC_SCALAR_GPIO_PhW_High_Config
+ 121              	 .global Motor0_BLDC_SCALAR_GPIO_PhV_Low_Config
+ 122              	 .global Motor0_BLDC_SCALAR_GPIO_PhV_High_Config
+ 123              	 .global Motor0_BLDC_SCALAR_GPIO_PhU_Low_Config
+ 124              	 .global Motor0_BLDC_SCALAR_GPIO_PhU_High_Config
+ 125              	 .section .rodata.Motor0_BLDC_SCALAR_GPIO_PhU_High_Config,"a",%progbits
+ 126              	 .align 2
+ 127              	 .set .LANCHOR0,.+0
+ 130              	Motor0_BLDC_SCALAR_GPIO_PhU_High_Config:
+ 131 0000 98       	 .byte -104
+ 132 0001 000000   	 .space 3
+ 133 0004 00000100 	 .word 65536
+ 134 0008 00       	 .byte 0
+ 135 0009 000000   	 .space 3
+ 136              	 .section .rodata.Motor0_BLDC_SCALAR_GPIO_PWM_Config,"a",%progbits
+ 137              	 .align 2
+ 140              	Motor0_BLDC_SCALAR_GPIO_PWM_Config:
+ 141 0000 00000000 	 .word Motor0_BLDC_SCALAR_GPIO_PhU_High_Config
+ 142 0004 00000000 	 .word Motor0_BLDC_SCALAR_GPIO_PhU_Low_Config
+ 143 0008 00000000 	 .word Motor0_BLDC_SCALAR_GPIO_PhV_High_Config
+ 144 000c 00000000 	 .word Motor0_BLDC_SCALAR_GPIO_PhV_Low_Config
+ 145 0010 00000000 	 .word Motor0_BLDC_SCALAR_GPIO_PhW_High_Config
+ 146 0014 00000000 	 .word Motor0_BLDC_SCALAR_GPIO_PhW_Low_Config
+ 147              	 .section .rodata.Motor0_BLDC_SCALAR_GPIO_PhU_Low_Config,"a",%progbits
+ 148              	 .align 2
+ 149              	 .set .LANCHOR1,.+0
+ 152              	Motor0_BLDC_SCALAR_GPIO_PhU_Low_Config:
+ 153 0000 98       	 .byte -104
+ 154 0001 000000   	 .space 3
+ 155 0004 00000100 	 .word 65536
+ 156 0008 00       	 .byte 0
+ 157 0009 000000   	 .space 3
+ 158              	 .section .rodata.Motor0_BLDC_SCALAR_GPIO_PhW_Low_Config,"a",%progbits
+ 159              	 .align 2
+ 160              	 .set .LANCHOR5,.+0
+ 163              	Motor0_BLDC_SCALAR_GPIO_PhW_Low_Config:
+ 164 0000 98       	 .byte -104
+ 165 0001 000000   	 .space 3
+ 166 0004 00000100 	 .word 65536
+ 167 0008 00       	 .byte 0
+ 168 0009 000000   	 .space 3
+ 169              	 .section .rodata.Motor0_BLDC_SCALAR_GPIO_Inverter_Config,"a",%progbits
+ 170              	 .align 2
+ 171              	 .set .LANCHOR7,.+0
+ 174              	Motor0_BLDC_SCALAR_GPIO_Inverter_Config:
+ 175 0000 80       	 .byte -128
+ 176 0001 000000   	 .space 3
+ 177 0004 00000100 	 .word 65536
+ 178 0008 01       	 .byte 1
+ 179 0009 000000   	 .space 3
+ 180              	 .section .rodata.Motor0_BLDC_SCALAR_GPIO_Hall_Config,"a",%progbits
+ 181              	 .align 2
+ 182              	 .set .LANCHOR6,.+0
+ 185              	Motor0_BLDC_SCALAR_GPIO_Hall_Config:
+ 186 0000 00       	 .byte 0
+ 187 0001 000000   	 .space 3
+ 188 0004 00000100 	 .word 65536
+ 189 0008 00       	 .byte 0
+ 190 0009 000000   	 .space 3
+ 191              	 .section .rodata.Motor0_BLDC_SCALAR_GPIO_PhW_High_Config,"a",%progbits
+ 192              	 .align 2
+ 193              	 .set .LANCHOR4,.+0
+ 196              	Motor0_BLDC_SCALAR_GPIO_PhW_High_Config:
+ 197 0000 98       	 .byte -104
+ 198 0001 000000   	 .space 3
+ 199 0004 00000100 	 .word 65536
+ 200 0008 00       	 .byte 0
+ 201 0009 000000   	 .space 3
+ 202              	 .section .rodata.Motor0_BLDC_SCALAR_GPIO_PhV_Low_Config,"a",%progbits
+ 203              	 .align 2
+ 204              	 .set .LANCHOR3,.+0
+ 207              	Motor0_BLDC_SCALAR_GPIO_PhV_Low_Config:
+ 208 0000 98       	 .byte -104
+ 209 0001 000000   	 .space 3
+ 210 0004 00000100 	 .word 65536
+ 211 0008 00       	 .byte 0
+ 212 0009 000000   	 .space 3
+ 213              	 .section .rodata.Motor0_BLDC_SCALAR_GPIO_PhV_High_Config,"a",%progbits
+ 214              	 .align 2
+ 215              	 .set .LANCHOR2,.+0
+ 218              	Motor0_BLDC_SCALAR_GPIO_PhV_High_Config:
+ 219 0000 98       	 .byte -104
+ 220 0001 000000   	 .space 3
+ 221 0004 00000100 	 .word 65536
+ 222 0008 00       	 .byte 0
+ 223 0009 000000   	 .space 3
+ 224              	 .ident "GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20141119 (release) [ARM/embedded-4_9-branch revision 218278]"
+DEFINED SYMBOLS
+                            *ABS*:00000000 gpio.c
+    {standard input}:17     .text.Motor0_BLDC_SCALAR_GPIO_PWM_Init:00000000 $t
+    {standard input}:22     .text.Motor0_BLDC_SCALAR_GPIO_PWM_Init:00000000 Motor0_BLDC_SCALAR_GPIO_PWM_Init
+    {standard input}:56     .text.Motor0_BLDC_SCALAR_GPIO_PWM_Init:00000048 $d
+    {standard input}:66     .text.Motor0_BLDC_SCALAR_GPIO_3Hall_Init:00000000 $t
+    {standard input}:71     .text.Motor0_BLDC_SCALAR_GPIO_3Hall_Init:00000000 Motor0_BLDC_SCALAR_GPIO_3Hall_Init
+    {standard input}:93     .text.Motor0_BLDC_SCALAR_GPIO_3Hall_Init:00000028 $d
+    {standard input}:97     .text.Motor0_BLDC_SCALAR_GPIO_Inverter_Init:00000000 $t
+    {standard input}:102    .text.Motor0_BLDC_SCALAR_GPIO_Inverter_Init:00000000 Motor0_BLDC_SCALAR_GPIO_Inverter_Init
+    {standard input}:113    .text.Motor0_BLDC_SCALAR_GPIO_Inverter_Init:0000000c $d
+    {standard input}:174    .rodata.Motor0_BLDC_SCALAR_GPIO_Inverter_Config:00000000 Motor0_BLDC_SCALAR_GPIO_Inverter_Config
+    {standard input}:140    .rodata.Motor0_BLDC_SCALAR_GPIO_PWM_Config:00000000 Motor0_BLDC_SCALAR_GPIO_PWM_Config
+    {standard input}:185    .rodata.Motor0_BLDC_SCALAR_GPIO_Hall_Config:00000000 Motor0_BLDC_SCALAR_GPIO_Hall_Config
+    {standard input}:163    .rodata.Motor0_BLDC_SCALAR_GPIO_PhW_Low_Config:00000000 Motor0_BLDC_SCALAR_GPIO_PhW_Low_Config
+    {standard input}:196    .rodata.Motor0_BLDC_SCALAR_GPIO_PhW_High_Config:00000000 Motor0_BLDC_SCALAR_GPIO_PhW_High_Config
+    {standard input}:207    .rodata.Motor0_BLDC_SCALAR_GPIO_PhV_Low_Config:00000000 Motor0_BLDC_SCALAR_GPIO_PhV_Low_Config
+    {standard input}:218    .rodata.Motor0_BLDC_SCALAR_GPIO_PhV_High_Config:00000000 Motor0_BLDC_SCALAR_GPIO_PhV_High_Config
+    {standard input}:152    .rodata.Motor0_BLDC_SCALAR_GPIO_PhU_Low_Config:00000000 Motor0_BLDC_SCALAR_GPIO_PhU_Low_Config
+    {standard input}:130    .rodata.Motor0_BLDC_SCALAR_GPIO_PhU_High_Config:00000000 Motor0_BLDC_SCALAR_GPIO_PhU_High_Config
+    {standard input}:126    .rodata.Motor0_BLDC_SCALAR_GPIO_PhU_High_Config:00000000 $d
+    {standard input}:137    .rodata.Motor0_BLDC_SCALAR_GPIO_PWM_Config:00000000 $d
+    {standard input}:148    .rodata.Motor0_BLDC_SCALAR_GPIO_PhU_Low_Config:00000000 $d
+    {standard input}:159    .rodata.Motor0_BLDC_SCALAR_GPIO_PhW_Low_Config:00000000 $d
+    {standard input}:170    .rodata.Motor0_BLDC_SCALAR_GPIO_Inverter_Config:00000000 $d
+    {standard input}:181    .rodata.Motor0_BLDC_SCALAR_GPIO_Hall_Config:00000000 $d
+    {standard input}:192    .rodata.Motor0_BLDC_SCALAR_GPIO_PhW_High_Config:00000000 $d
+    {standard input}:203    .rodata.Motor0_BLDC_SCALAR_GPIO_PhV_Low_Config:00000000 $d
+    {standard input}:214    .rodata.Motor0_BLDC_SCALAR_GPIO_PhV_High_Config:00000000 $d
+
+UNDEFINED SYMBOLS
+XMC_GPIO_Init

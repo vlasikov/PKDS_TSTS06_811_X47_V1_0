@@ -1,0 +1,111 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu fpv4-sp-d16
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,4
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "bldc_scalar_current_motor.c"
+  16              	 .section .text.Motor0_BLDC_SCALAR_Current_Measurment_Init,"ax",%progbits
+  17              	 .align 1
+  18              	 .global Motor0_BLDC_SCALAR_Current_Measurment_Init
+  19              	 .thumb
+  20              	 .thumb_func
+  22              	Motor0_BLDC_SCALAR_Current_Measurment_Init:
+  23              	 
+  24              	 
+  25 0000 10B5     	 push {r4,lr}
+  26 0002 0D4C     	 ldr r4,.L2
+  27 0004 0D4A     	 ldr r2,.L2+4
+  28 0006 2046     	 mov r0,r4
+  29 0008 0521     	 movs r1,#5
+  30 000a FFF7FEFF 	 bl XMC_VADC_GROUP_ChannelInit
+  31 000e 0C4B     	 ldr r3,.L2+8
+  32 0010 1B68     	 ldr r3,[r3]
+  33 0012 C4F89432 	 str r3,[r4,#660]
+  34 0016 0B4B     	 ldr r3,.L2+12
+  35 0018 1B68     	 ldr r3,[r3]
+  36 001a C4F81031 	 str r3,[r4,#272]
+  37 001e 2046     	 mov r0,r4
+  38 0020 0021     	 movs r1,#0
+  39 0022 41F60572 	 movw r2,#7941
+  40 0026 FFF7FEFF 	 bl XMC_VADC_GROUP_SetBoundaries
+  41 002a 2046     	 mov r0,r4
+  42 002c 0521     	 movs r1,#5
+  43 002e 0422     	 movs r2,#4
+  44 0030 BDE81040 	 pop {r4,lr}
+  45 0034 FFF7FEBF 	 b XMC_VADC_GROUP_ChannelSetEventInterruptNode
+  46              	.L3:
+  47              	 .align 2
+  48              	.L2:
+  49 0038 00500040 	 .word 1073762304
+  50 003c 00000000 	 .word Motor0_BLDC_SCALAR_VADC_IDCLink_CH_handle
+  51 0040 00000000 	 .word Motor0_BLDC_SCALAR_VADC_IDCLink_Res_handle
+  52 0044 00000000 	 .word Motor0_BLDC_SCALAR_VADC_IDCLink_queue_entry
+  54              	 .section .text.Motor0_BLDC_SCALAR_AmpBiasVoltCalibration,"ax",%progbits
+  55              	 .align 1
+  56              	 .global Motor0_BLDC_SCALAR_AmpBiasVoltCalibration
+  57              	 .thumb
+  58              	 .thumb_func
+  60              	Motor0_BLDC_SCALAR_AmpBiasVoltCalibration:
+  61              	 
+  62              	 
+  63              	 
+  64 0000 82B0     	 sub sp,sp,#8
+  65 0002 1022     	 movs r2,#16
+  66 0004 0023     	 movs r3,#0
+  67              	.L7:
+  68 0006 0D49     	 ldr r1,.L12
+  69 0008 D1F80401 	 ldr r0,[r1,#260]
+  70 000c 40F40070 	 orr r0,r0,#512
+  71 0010 C1F80401 	 str r0,[r1,#260]
+  72 0014 0020     	 movs r0,#0
+  73              	.L9:
+  74 0016 0190     	 str r0,[sp,#4]
+  75 0018 0198     	 ldr r0,[sp,#4]
+  76 001a 0E28     	 cmp r0,#14
+  77 001c 02D8     	 bhi .L11
+  78 001e 0198     	 ldr r0,[sp,#4]
+  79 0020 0130     	 adds r0,r0,#1
+  80 0022 F8E7     	 b .L9
+  81              	.L11:
+  82 0024 D1F81413 	 ldr r1,[r1,#788]
+  83 0028 013A     	 subs r2,r2,#1
+  84 002a 13FA81F3 	 uxtah r3,r3,r1
+  85 002e EAD1     	 bne .L7
+  86 0030 034A     	 ldr r2,.L12+4
+  87 0032 1B09     	 lsrs r3,r3,#4
+  88 0034 1360     	 str r3,[r2]
+  89 0036 02B0     	 add sp,sp,#8
+  90              	 
+  91 0038 7047     	 bx lr
+  92              	.L13:
+  93 003a 00BF     	 .align 2
+  94              	.L12:
+  95 003c 00500040 	 .word 1073762304
+  96 0040 00000000 	 .word Motor0_BLDC_SCALAR_CurrentMeasurement
+  98              	 .ident "GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20141119 (release) [ARM/embedded-4_9-branch revision 218278]"
+DEFINED SYMBOLS
+                            *ABS*:00000000 bldc_scalar_current_motor.c
+    {standard input}:17     .text.Motor0_BLDC_SCALAR_Current_Measurment_Init:00000000 $t
+    {standard input}:22     .text.Motor0_BLDC_SCALAR_Current_Measurment_Init:00000000 Motor0_BLDC_SCALAR_Current_Measurment_Init
+    {standard input}:49     .text.Motor0_BLDC_SCALAR_Current_Measurment_Init:00000038 $d
+    {standard input}:55     .text.Motor0_BLDC_SCALAR_AmpBiasVoltCalibration:00000000 $t
+    {standard input}:60     .text.Motor0_BLDC_SCALAR_AmpBiasVoltCalibration:00000000 Motor0_BLDC_SCALAR_AmpBiasVoltCalibration
+    {standard input}:95     .text.Motor0_BLDC_SCALAR_AmpBiasVoltCalibration:0000003c $d
+
+UNDEFINED SYMBOLS
+XMC_VADC_GROUP_ChannelInit
+XMC_VADC_GROUP_SetBoundaries
+XMC_VADC_GROUP_ChannelSetEventInterruptNode
+Motor0_BLDC_SCALAR_VADC_IDCLink_CH_handle
+Motor0_BLDC_SCALAR_VADC_IDCLink_Res_handle
+Motor0_BLDC_SCALAR_VADC_IDCLink_queue_entry
+Motor0_BLDC_SCALAR_CurrentMeasurement

@@ -1,0 +1,157 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu fpv4-sp-d16
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,4
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "bldc_scalar_speed_pos_hall.c"
+  16              	 .section .text.Motor0_BLDC_SCALAR_SPEED_POS_HALL_Init,"ax",%progbits
+  17              	 .align 1
+  18              	 .global Motor0_BLDC_SCALAR_SPEED_POS_HALL_Init
+  19              	 .thumb
+  20              	 .thumb_func
+  22              	Motor0_BLDC_SCALAR_SPEED_POS_HALL_Init:
+  23              	 
+  24              	 
+  25 0000 08B5     	 push {r3,lr}
+  26 0002 FFF7FEFF 	 bl Motor0_BLDC_SCALAR_POSIF_3Hall_Init
+  27 0006 FFF7FEFF 	 bl Motor0_BLDC_SCALAR_CCU4_3Hall_Init
+  28 000a BDE80840 	 pop {r3,lr}
+  29 000e FFF7FEBF 	 b Motor0_BLDC_SCALAR_GPIO_3Hall_Init
+  31              	 .section .text.Motor0_BLDC_SCALAR_SPEED_POS_HALL_Start,"ax",%progbits
+  32              	 .align 1
+  33              	 .global Motor0_BLDC_SCALAR_SPEED_POS_HALL_Start
+  34              	 .thumb
+  35              	 .thumb_func
+  37              	Motor0_BLDC_SCALAR_SPEED_POS_HALL_Start:
+  38              	 
+  39              	 
+  40              	 
+  41 0000 0C4B     	 ldr r3,.L3
+  42 0002 0022     	 movs r2,#0
+  43 0004 596A     	 ldr r1,[r3,#36]
+  44 0006 9A60     	 str r2,[r3,#8]
+  45 0008 1A61     	 str r2,[r3,#16]
+  46 000a 83F82920 	 strb r2,[r3,#41]
+  47 000e DA61     	 str r2,[r3,#28]
+  48 0010 1A60     	 str r2,[r3]
+  49 0012 5A60     	 str r2,[r3,#4]
+  50 0014 DA60     	 str r2,[r3,#12]
+  51 0016 5A61     	 str r2,[r3,#20]
+  52 0018 9961     	 str r1,[r3,#24]
+  53 001a 1A62     	 str r2,[r3,#32]
+  54 001c 064B     	 ldr r3,.L3+4
+  55 001e 0122     	 movs r2,#1
+  56 0020 9A60     	 str r2,[r3,#8]
+  57 0022 064B     	 ldr r3,.L3+8
+  58 0024 0221     	 movs r1,#2
+  59 0026 1961     	 str r1,[r3,#16]
+  60 0028 C3F81011 	 str r1,[r3,#272]
+  61 002c C3F80C21 	 str r2,[r3,#268]
+  62 0030 7047     	 bx lr
+  63              	.L4:
+  64 0032 00BF     	 .align 2
+  65              	.L3:
+  66 0034 00000000 	 .word Motor0_BLDC_SCALAR_SPEED_POS_HALL
+  67 0038 00800240 	 .word 1073905664
+  68 003c 00C10040 	 .word 1073791232
+  70              	 .section .text.Motor0_BLDC_SCALAR_SPEED_POS_HALL_Stop,"ax",%progbits
+  71              	 .align 1
+  72              	 .global Motor0_BLDC_SCALAR_SPEED_POS_HALL_Stop
+  73              	 .thumb
+  74              	 .thumb_func
+  76              	Motor0_BLDC_SCALAR_SPEED_POS_HALL_Stop:
+  77              	 
+  78              	 
+  79              	 
+  80 0000 064B     	 ldr r3,.L6
+  81 0002 0322     	 movs r2,#3
+  82 0004 DA60     	 str r2,[r3,#12]
+  83 0006 064B     	 ldr r3,.L6+4
+  84 0008 1022     	 movs r2,#16
+  85 000a C3F88821 	 str r2,[r3,#392]
+  86 000e 054A     	 ldr r2,.L6+8
+  87 0010 0123     	 movs r3,#1
+  88 0012 1361     	 str r3,[r2,#16]
+  89 0014 C2F81031 	 str r3,[r2,#272]
+  90 0018 7047     	 bx lr
+  91              	.L7:
+  92 001a 00BF     	 .align 2
+  93              	.L6:
+  94 001c 00800240 	 .word 1073905664
+  95 0020 00E100E0 	 .word -536813312
+  96 0024 00C10040 	 .word 1073791232
+  98              	 .section .text.Motor0_BLDC_SCALAR_SPEED_POS_HALL_GetHallPosition,"ax",%progbits
+  99              	 .align 1
+ 100              	 .global Motor0_BLDC_SCALAR_SPEED_POS_HALL_GetHallPosition
+ 101              	 .thumb
+ 102              	 .thumb_func
+ 104              	Motor0_BLDC_SCALAR_SPEED_POS_HALL_GetHallPosition:
+ 105              	 
+ 106              	 
+ 107              	 
+ 108 0000 074B     	 ldr r3,.L9
+ 109 0002 586A     	 ldr r0,[r3,#36]
+ 110 0004 5A6A     	 ldr r2,[r3,#36]
+ 111 0006 5B6A     	 ldr r3,[r3,#36]
+ 112 0008 C3F34003 	 ubfx r3,r3,#1,#1
+ 113 000c C2F38002 	 ubfx r2,r2,#2,#1
+ 114 0010 9B00     	 lsls r3,r3,#2
+ 115 0012 43EA4203 	 orr r3,r3,r2,lsl#1
+ 116 0016 C0F3C000 	 ubfx r0,r0,#3,#1
+ 117 001a 1843     	 orrs r0,r0,r3
+ 118 001c 7047     	 bx lr
+ 119              	.L10:
+ 120 001e 00BF     	 .align 2
+ 121              	.L9:
+ 122 0020 00810248 	 .word 1208123648
+ 124              	 .global BLDC_SCALAR_SPEED_POS_HALL_Cap_Array
+ 125              	 .section .data.BLDC_SCALAR_SPEED_POS_HALL_Cap_Array,"aw",%progbits
+ 126              	 .align 2
+ 129              	BLDC_SCALAR_SPEED_POS_HALL_Cap_Array:
+ 130 0000 00000000 	 .word 0
+ 131 0004 FFFF0000 	 .word 65535
+ 132 0008 FDFF0200 	 .word 196605
+ 133 000c F9FF0600 	 .word 458745
+ 134 0010 F1FF0E00 	 .word 983025
+ 135 0014 E1FF1E00 	 .word 2031585
+ 136 0018 C1FF3E00 	 .word 4128705
+ 137 001c 81FF7E00 	 .word 8322945
+ 138 0020 01FFFE00 	 .word 16711425
+ 139 0024 01FEFE01 	 .word 33488385
+ 140 0028 01FCFE03 	 .word 67042305
+ 141 002c 01F8FE07 	 .word 134150145
+ 142 0030 01F0FE0F 	 .word 268365825
+ 143 0034 01E0FE1F 	 .word 536797185
+ 144 0038 01C0FE3F 	 .word 1073659905
+ 145 003c 0180FE7F 	 .word 2147385345
+ 146              	 .ident "GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20141119 (release) [ARM/embedded-4_9-branch revision 218278]"
+DEFINED SYMBOLS
+                            *ABS*:00000000 bldc_scalar_speed_pos_hall.c
+    {standard input}:17     .text.Motor0_BLDC_SCALAR_SPEED_POS_HALL_Init:00000000 $t
+    {standard input}:22     .text.Motor0_BLDC_SCALAR_SPEED_POS_HALL_Init:00000000 Motor0_BLDC_SCALAR_SPEED_POS_HALL_Init
+    {standard input}:32     .text.Motor0_BLDC_SCALAR_SPEED_POS_HALL_Start:00000000 $t
+    {standard input}:37     .text.Motor0_BLDC_SCALAR_SPEED_POS_HALL_Start:00000000 Motor0_BLDC_SCALAR_SPEED_POS_HALL_Start
+    {standard input}:66     .text.Motor0_BLDC_SCALAR_SPEED_POS_HALL_Start:00000034 $d
+    {standard input}:71     .text.Motor0_BLDC_SCALAR_SPEED_POS_HALL_Stop:00000000 $t
+    {standard input}:76     .text.Motor0_BLDC_SCALAR_SPEED_POS_HALL_Stop:00000000 Motor0_BLDC_SCALAR_SPEED_POS_HALL_Stop
+    {standard input}:94     .text.Motor0_BLDC_SCALAR_SPEED_POS_HALL_Stop:0000001c $d
+    {standard input}:99     .text.Motor0_BLDC_SCALAR_SPEED_POS_HALL_GetHallPosition:00000000 $t
+    {standard input}:104    .text.Motor0_BLDC_SCALAR_SPEED_POS_HALL_GetHallPosition:00000000 Motor0_BLDC_SCALAR_SPEED_POS_HALL_GetHallPosition
+    {standard input}:122    .text.Motor0_BLDC_SCALAR_SPEED_POS_HALL_GetHallPosition:00000020 $d
+    {standard input}:129    .data.BLDC_SCALAR_SPEED_POS_HALL_Cap_Array:00000000 BLDC_SCALAR_SPEED_POS_HALL_Cap_Array
+    {standard input}:126    .data.BLDC_SCALAR_SPEED_POS_HALL_Cap_Array:00000000 $d
+
+UNDEFINED SYMBOLS
+Motor0_BLDC_SCALAR_POSIF_3Hall_Init
+Motor0_BLDC_SCALAR_CCU4_3Hall_Init
+Motor0_BLDC_SCALAR_GPIO_3Hall_Init
+Motor0_BLDC_SCALAR_SPEED_POS_HALL

@@ -1,0 +1,143 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu fpv4-sp-d16
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,4
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "vadc.c"
+  16              	 .section .text.Motor0_BLDC_SCALAR_VADC_Init,"ax",%progbits
+  17              	 .align 1
+  18              	 .global Motor0_BLDC_SCALAR_VADC_Init
+  19              	 .thumb
+  20              	 .thumb_func
+  22              	Motor0_BLDC_SCALAR_VADC_Init:
+  23              	 
+  24              	 
+  25 0000 10B5     	 push {r4,lr}
+  26 0002 164C     	 ldr r4,.L6
+  27 0004 1649     	 ldr r1,.L6+4
+  28 0006 4FF04020 	 mov r0,#1073758208
+  29 000a FFF7FEFF 	 bl XMC_VADC_GLOBAL_Init
+  30 000e 2046     	 mov r0,r4
+  31 0010 0321     	 movs r1,#3
+  32 0012 FFF7FEFF 	 bl XMC_VADC_GROUP_SetPowerMode
+  33 0016 134B     	 ldr r3,.L6+8
+  34 0018 0022     	 movs r2,#0
+  35 001a 1968     	 ldr r1,[r3]
+  36 001c 2046     	 mov r0,r4
+  37 001e 1346     	 mov r3,r2
+  38 0020 FFF7FEFF 	 bl XMC_VADC_GROUP_InputClassInit
+  39 0024 2046     	 mov r0,r4
+  40 0026 1049     	 ldr r1,.L6+12
+  41 0028 FFF7FEFF 	 bl XMC_VADC_GROUP_QueueInit
+  42 002c D4F80431 	 ldr r3,[r4,#260]
+  43 0030 23F00303 	 bic r3,r3,#3
+  44 0034 C4F80431 	 str r3,[r4,#260]
+  45 0038 D4F80431 	 ldr r3,[r4,#260]
+  46 003c 43F00103 	 orr r3,r3,#1
+  47 0040 C4F80431 	 str r3,[r4,#260]
+  48 0044 D4F80431 	 ldr r3,[r4,#260]
+  49 0048 43F48063 	 orr r3,r3,#1024
+  50 004c C4F80431 	 str r3,[r4,#260]
+  51              	.L2:
+  52 0050 D4F80831 	 ldr r3,[r4,#264]
+  53 0054 9B06     	 lsls r3,r3,#26
+  54 0056 FBD5     	 bpl .L2
+  55 0058 10BD     	 pop {r4,pc}
+  56              	.L7:
+  57 005a 00BF     	 .align 2
+  58              	.L6:
+  59 005c 00500040 	 .word 1073762304
+  60 0060 00000000 	 .word .LANCHOR0
+  61 0064 00000000 	 .word .LANCHOR1
+  62 0068 00000000 	 .word .LANCHOR2
+  64              	 .comm VADC_BoundaryConfig,20,4
+  65              	 .global Motor0_BLDC_SCALAR_VADC_IDCLink_Res_handle
+  66              	 .global Motor0_BLDC_SCALAR_VADC_IDCLink_CH_handle
+  67              	 .global Motor0_BLDC_SCALAR_VADC_IDCLink_queue_entry
+  68              	 .global Motor0_BLDC_SCALAR_VADC_QUEUE_3_cfg
+  69              	 .global Motor0_BLDC_SCALAR_VADC_GROUP_class0
+  70              	 .global Motor0_BLDC_SCALAR_VADC_GLOBAL_config
+  71              	 .section .rodata.Motor0_BLDC_SCALAR_VADC_GROUP_class0,"a",%progbits
+  72              	 .align 2
+  73              	 .set .LANCHOR1,.+0
+  76              	Motor0_BLDC_SCALAR_VADC_GROUP_class0:
+  77 0000 01       	 .byte 1
+  78 0001 00       	 .byte 0
+  79 0002 00       	 .byte 0
+  80 0003 00       	 .byte 0
+  81              	 .section .rodata.Motor0_BLDC_SCALAR_VADC_QUEUE_3_cfg,"a",%progbits
+  82              	 .align 2
+  83              	 .set .LANCHOR2,.+0
+  86              	Motor0_BLDC_SCALAR_VADC_QUEUE_3_cfg:
+  87 0000 00       	 .byte 0
+  88 0001 000000   	 .space 3
+  89 0004 00       	 .space 1
+  90 0005 48       	 .byte 72
+  91 0006 00       	 .byte 0
+  92 0007 00       	 .byte 0
+  93 0008 04       	 .byte 4
+  94 0009 000000   	 .space 3
+  95              	 .section .data.Motor0_BLDC_SCALAR_VADC_IDCLink_CH_handle,"aw",%progbits
+  96              	 .align 2
+  99              	Motor0_BLDC_SCALAR_VADC_IDCLink_CH_handle:
+ 100 0000 42       	 .byte 66
+ 101 0001 02       	 .byte 2
+ 102 0002 25       	 .byte 37
+ 103 0003 00       	 .space 1
+ 104 0004 00000000 	 .space 9
+ 104      00000000 
+ 104      00
+ 105 000d FF       	 .byte -1
+ 106 000e 0000     	 .space 2
+ 107              	 .section .bss.Motor0_BLDC_SCALAR_VADC_IDCLink_Res_handle,"aw",%nobits
+ 108              	 .align 2
+ 111              	Motor0_BLDC_SCALAR_VADC_IDCLink_Res_handle:
+ 112 0000 00000000 	 .space 4
+ 113              	 .section .data.Motor0_BLDC_SCALAR_VADC_IDCLink_queue_entry,"aw",%progbits
+ 114              	 .align 2
+ 117              	Motor0_BLDC_SCALAR_VADC_IDCLink_queue_entry:
+ 118 0000 A5       	 .byte 165
+ 119 0001 000000   	 .space 3
+ 120              	 .section .rodata.Motor0_BLDC_SCALAR_VADC_GLOBAL_config,"a",%progbits
+ 121              	 .align 2
+ 122              	 .set .LANCHOR0,.+0
+ 125              	Motor0_BLDC_SCALAR_VADC_GLOBAL_config:
+ 126 0000 00000000 	 .space 24
+ 126      00000000 
+ 126      00000000 
+ 126      00000000 
+ 126      00000000 
+ 127              	 .ident "GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20141119 (release) [ARM/embedded-4_9-branch revision 218278]"
+DEFINED SYMBOLS
+                            *ABS*:00000000 vadc.c
+    {standard input}:17     .text.Motor0_BLDC_SCALAR_VADC_Init:00000000 $t
+    {standard input}:22     .text.Motor0_BLDC_SCALAR_VADC_Init:00000000 Motor0_BLDC_SCALAR_VADC_Init
+    {standard input}:59     .text.Motor0_BLDC_SCALAR_VADC_Init:0000005c $d
+                            *COM*:00000014 VADC_BoundaryConfig
+    {standard input}:111    .bss.Motor0_BLDC_SCALAR_VADC_IDCLink_Res_handle:00000000 Motor0_BLDC_SCALAR_VADC_IDCLink_Res_handle
+    {standard input}:99     .data.Motor0_BLDC_SCALAR_VADC_IDCLink_CH_handle:00000000 Motor0_BLDC_SCALAR_VADC_IDCLink_CH_handle
+    {standard input}:117    .data.Motor0_BLDC_SCALAR_VADC_IDCLink_queue_entry:00000000 Motor0_BLDC_SCALAR_VADC_IDCLink_queue_entry
+    {standard input}:86     .rodata.Motor0_BLDC_SCALAR_VADC_QUEUE_3_cfg:00000000 Motor0_BLDC_SCALAR_VADC_QUEUE_3_cfg
+    {standard input}:76     .rodata.Motor0_BLDC_SCALAR_VADC_GROUP_class0:00000000 Motor0_BLDC_SCALAR_VADC_GROUP_class0
+    {standard input}:125    .rodata.Motor0_BLDC_SCALAR_VADC_GLOBAL_config:00000000 Motor0_BLDC_SCALAR_VADC_GLOBAL_config
+    {standard input}:72     .rodata.Motor0_BLDC_SCALAR_VADC_GROUP_class0:00000000 $d
+    {standard input}:82     .rodata.Motor0_BLDC_SCALAR_VADC_QUEUE_3_cfg:00000000 $d
+    {standard input}:96     .data.Motor0_BLDC_SCALAR_VADC_IDCLink_CH_handle:00000000 $d
+    {standard input}:108    .bss.Motor0_BLDC_SCALAR_VADC_IDCLink_Res_handle:00000000 $d
+    {standard input}:114    .data.Motor0_BLDC_SCALAR_VADC_IDCLink_queue_entry:00000000 $d
+    {standard input}:121    .rodata.Motor0_BLDC_SCALAR_VADC_GLOBAL_config:00000000 $d
+
+UNDEFINED SYMBOLS
+XMC_VADC_GLOBAL_Init
+XMC_VADC_GROUP_SetPowerMode
+XMC_VADC_GROUP_InputClassInit
+XMC_VADC_GROUP_QueueInit
