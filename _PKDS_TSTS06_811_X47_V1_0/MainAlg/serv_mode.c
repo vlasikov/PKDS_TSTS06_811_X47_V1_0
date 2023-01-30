@@ -11,7 +11,7 @@
 #include "MainAlg/door_periph.h"
 //#include "bldc_scalar_user_interface.h"
 //#include "stdlib.h"
-#include "MainAlg/ext_can.h"
+//#include "MainAlg/ext_can.h"
 #include <MainAlg/presets.h>
 #include <MainAlg/retain_xmc4.h>
 
