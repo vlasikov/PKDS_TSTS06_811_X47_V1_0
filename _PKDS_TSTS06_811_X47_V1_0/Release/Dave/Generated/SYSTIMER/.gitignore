@@ -1,3 +1,6 @@
 /systimer.d
 /systimer.o
 /systimer.o.lst
+/systimer_conf.d
+/systimer_conf.o
+/systimer_conf.o.lst
